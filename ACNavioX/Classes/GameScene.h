@@ -28,4 +28,4 @@ public:
 };
 
 
-#endif /* defined(__ACNavioX__GameScene__) */
+#endif  // __ACNavioX__GameScene__

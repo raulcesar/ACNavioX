@@ -1,5 +1,7 @@
 #Generated Art files
 ArtOriginal/Generated/
+linux-build
+.idea/
 
 # Compiled Object files
 *.slo
