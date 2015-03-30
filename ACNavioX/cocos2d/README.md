@@ -47,8 +47,8 @@ Example:
     $ cd cocos2d-x
     $ ./setup.py
     $ source FILE_TO_SAVE_SYSTEM_VARIABLE
-    $ cocos new MyGame -p com.your_company.mygame -l cpp -d NEW_PROJECTS_DIR
-    $ cd NEW_PROJECTS_DIR/MyGame
+    $ cocos new ACNavioX -p com.your_company.ACNavioX -l cpp -d NEW_PROJECTS_DIR
+    $ cd NEW_PROJECTS_DIR/ACNavioX
 
 ### Build and run a new project for Android ###
 
@@ -72,12 +72,12 @@ script in **cocos2d/build/install-deps-linux.sh**
 
 Then
 
-    $ cd NEW_PROJECTS_DIR/MyGame
+    $ cd NEW_PROJECTS_DIR/ACNavioX
     $ cocos run -p linux
     
 Run
 
-    $ bin/MyGame
+    $ bin/ACNavioX
 
 ### Build and run new project for win32 ###
 
@@ -85,7 +85,7 @@ Run
 
 ### Build and run new project for Windows 8.1 and Windows Phone 8.1 ###
 
-    $ cocos new MyGame -p com.bar.foo -l cpp -d projects
+    $ cocos new ACNavioX -p com.bar.foo -l cpp -d projects
 
 With the Cocos2d-x v3.3, you can create Universal App (Two projects at the same time: Windows(Tablet) and Windows Phone 8.1 )
 See more info on How to install and Create games on Windows RT (Windows and Windows Phone 8.1) at http://msopentech.github.io/cocos2d-x/

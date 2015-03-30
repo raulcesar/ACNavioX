@@ -153,6 +153,12 @@ endif()
 # GLFW3 used on Mac, Windows and Linux desktop platforms
 if(LINUX OR MACOSX OR WINDOWS)
   cocos_find_package(OpenGL OPENGL REQUIRED)
+ 
+ if(LINUX OR MACOSX)
+   message("incluindo X11")
+   cocos_find_package(X11 X11 REQUIRED)
+ endif()
+
 
   if(LINUX OR WINDOWS)
     cocos_find_package(GLEW GLEW REQUIRED)

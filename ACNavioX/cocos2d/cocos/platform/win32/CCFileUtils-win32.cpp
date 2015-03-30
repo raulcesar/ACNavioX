@@ -280,13 +280,13 @@ std::string FileUtilsWin32::getFullPathForDirectoryAndFilename(const std::string
 
 string FileUtilsWin32::getWritablePath() const
 {
-    // Get full path of executable, e.g. c:\Program Files (x86)\My Game Folder\MyGame.exe
+    // Get full path of executable, e.g. c:\Program Files (x86)\My Game Folder\ACNavioX.exe
     char full_path[CC_MAX_PATH + 1];
     ::GetModuleFileNameA(nullptr, full_path, CC_MAX_PATH + 1);
 
     // Debug app uses executable directory; Non-debug app uses local app data directory
 //#ifndef _DEBUG
-        // Get filename of executable only, e.g. MyGame.exe
+        // Get filename of executable only, e.g. ACNavioX.exe
         char *base_name = strrchr(full_path, '\\');
 
         if(base_name)
@@ -298,10 +298,10 @@ string FileUtilsWin32::getWritablePath() const
             {
                 string ret((char*)app_data_path);
 
-                // Adding executable filename, e.g. C:\Documents and Settings\username\Local Settings\Application Data\MyGame.exe
+                // Adding executable filename, e.g. C:\Documents and Settings\username\Local Settings\Application Data\ACNavioX.exe
                 ret += base_name;
 
-                // Remove ".exe" extension, e.g. C:\Documents and Settings\username\Local Settings\Application Data\MyGame
+                // Remove ".exe" extension, e.g. C:\Documents and Settings\username\Local Settings\Application Data\ACNavioX
                 ret = ret.substr(0, ret.rfind("."));
 
                 ret += "\\";
