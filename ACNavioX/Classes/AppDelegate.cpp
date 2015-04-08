@@ -1,5 +1,5 @@
 #include "AppDelegate.h"
-#include "HelloWorldScene.h"
+#include "GameScene.h"
 
 USING_NS_CC;
 
@@ -23,6 +23,7 @@ void AppDelegate::initGLContextAttrs()
 }
 
 bool AppDelegate::applicationDidFinishLaunching() {
+
     // initialize director
     auto director = Director::getInstance();
     auto glview = director->getOpenGLView();
@@ -31,6 +32,31 @@ bool AppDelegate::applicationDidFinishLaunching() {
         director->setOpenGLView(glview);
     }
 
+
+    director->setContentScaleFactor(2);
+    
+    auto fileUtils = CCFileUtils::getInstance();
+    auto screenSize = glview->getFrameSize();
+    
+    std::vector<std::string> resDirOrders;
+    
+    //Check resolution
+    if (screenSize.width > 2024) {
+        //retina ipad
+        resDirOrders.push_back("hd");
+        glview->setDesignResolutionSize(2048, 1536, ResolutionPolicy::NO_BORDER);
+    }
+    
+    fileUtils->setSearchPaths(resDirOrders);
+    
+    
+   
+    
+    
+
+    
+
+    
     // turn on display FPS
     director->setDisplayStats(true);
 
@@ -38,7 +64,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     director->setAnimationInterval(1.0 / 60);
 
     // create a scene. it's an autorelease object
-    auto scene = HelloWorld::createScene();
+    auto scene = GameScene::createScene();
 
     // run
     director->runWithScene(scene);

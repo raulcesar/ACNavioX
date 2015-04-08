@@ -1,0 +1,3 @@
+[submodule "ACNavioX/cocos2d"]
+	path = ACNavioX/cocos2d
+	url = https://github.com/raulcesar/cocos2d-x.git
