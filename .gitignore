@@ -3,6 +3,9 @@ ArtOriginal/Generated/
 linux-build
 .idea/
 
+#binaries
+bin/
+
 # Compiled Object files
 *.slo
 *.lo
