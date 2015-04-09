@@ -7,7 +7,9 @@
 //
 
 #include "GameScene.h"
+
 USING_NS_CC;
+
 
 Scene* GameScene::createScene()
 {
@@ -22,6 +24,18 @@ Scene* GameScene::createScene()
     
     // return the scene
     return scene;
+}
+
+
+void GameScene::initBox2dWorld() {
+    b2Vec2 gravity;
+    gravity.Set(0.0f, -9.0f);//No gravity
+    bool doSleep = true;
+    _world = new b2World(gravity);
+
+    //Call tick method
+    //TODO: Review fixed time tick method (from platformer)
+
 }
 
 // on "init" you need to initialize your instance

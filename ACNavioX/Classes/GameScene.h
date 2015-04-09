@@ -10,6 +10,8 @@
 #define __ACNavioX__GameScene__
 
 #include "cocos2d.h"
+#include "Box2D/Box2D.h"
+
 
 class GameScene : public cocos2d::Layer
 {
@@ -25,6 +27,10 @@ public:
     
     // implement the "static create()" method manually
     CREATE_FUNC(GameScene);
+
+private:
+	void initBox2dWorld();
+	b2World *_world;
 };
 
 
