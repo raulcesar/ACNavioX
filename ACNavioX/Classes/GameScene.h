@@ -9,6 +9,8 @@
 #ifndef __ACNavioX__GameScene__
 #define __ACNavioX__GameScene__
 
+#define PTM_RATIO 32.0
+
 #include "cocos2d.h"
 #include "Box2D/Box2D.h"
 
@@ -30,7 +32,10 @@ public:
 
 private:
 	void initBox2dWorld();
+    void tick(float dt);
 	b2World *_world;
+    b2Body * _body;
+    cocos2d::Sprite * _ball;
 };
 
 
