@@ -32,10 +32,12 @@ public:
 
 private:
 	void initBox2dWorld();
+    void debugDrawPhysics(b2World *_world);
     void tick(float dt);
 	b2World *_world;
     b2Body * _body;
     cocos2d::Sprite * _ball;
+    cocos2d::DrawNode * _drawNode;
 };
 
 

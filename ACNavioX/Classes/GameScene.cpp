@@ -29,6 +29,24 @@ Scene* GameScene::createScene()
 
 
 void GameScene::initBox2dWorld() {
+// m_debugDraw = new GLESDebugDraw( PTM_RATIO );
+// world->SetDebugDraw(m_debugDraw);
+
+// world->SetAllowSleeping(false);
+
+// uint32 flags = 0;
+// flags += b2Draw::e_shapeBit;
+// //        flags += b2Draw::e_jointBit;
+// //        flags += b2Draw::e_aabbBit;
+// //        flags += b2Draw::e_pairBit;
+// //        flags += b2Draw::e_centerOfMassBit;
+// m_debugDraw->SetFlags(flags);
+    _drawNode = DrawNode::create();
+
+
+    this->addChild(_drawNode);
+
+
     b2Vec2 gravity;
     gravity.Set(0.0f, -9.0f);//No gravity
     bool doSleep = true;
@@ -55,7 +73,71 @@ void GameScene::initBox2dWorld() {
     //TODO: Review fixed time tick method (from platformer)
     this->schedule(CC_SCHEDULE_SELECTOR(GameScene::tick), 0, CC_REPEAT_FOREVER, 0);
     // this->schedule(schedule_selector(GameScene::tick));
+}
 
+void GameScene::debugDrawPhysics(b2World *_world) {
+    const Color4F fillColor(1.0f, 0.0f, 0.0f, 0.3f);
+    const Color4F outlineColor(1.0f, 0.0f, 0.0f, 1.0f);
+
+    _drawNode->clear();
+    for (b2Body *b = _world->GetBodyList(); b; b = b->GetNext()) {
+        //Por hora, vamos assumir que so temos circulos....
+        for (b2Fixture *f = b->GetFixtureList(); f; f = f->GetNext()) {
+            b2Shape *s = f->GetShape();
+
+
+            b2CircleShape *circle = (b2CircleShape*) s;
+
+            float radiuspx = circle->m_radius * PTM_RATIO;
+
+            b2Vec2 position = b->GetPosition();
+            auto spritePosition = Point((position.x * PTM_RATIO), (position.y * PTM_RATIO));
+
+
+            static const int CIRCLE_SEG_NUM = 12;
+            Vec2 seg[CIRCLE_SEG_NUM] = {};
+            Vec2 center((position.x * PTM_RATIO), (position.y * PTM_RATIO));
+            CCLOG("Radius: %4.2f Center: %4.2f, %4.2f \n", radiuspx, center.x, center.y);
+
+            for (int i = 0; i < CIRCLE_SEG_NUM; ++i)
+            {
+                float angle = (float)i * M_PI / (float)CIRCLE_SEG_NUM * 2.0f;
+                Vec2 d(radiuspx * cosf(angle), radiuspx * sinf(angle));
+                seg[i] = center + d;
+            }
+
+            _drawNode->drawPolygon(seg, CIRCLE_SEG_NUM, fillColor, 1, outlineColor);
+
+
+        }
+
+
+        //get radius
+        //get center
+        // CCLOG("%4.2f %4.2f %4.2f\n", position.x, position.y, angle);
+
+
+
+    }
+
+
+    //Get the shape...
+
+    // float radius = PhysicsHelper::cpfloat2float(cpCircleShapeGetRadius(subShape));
+    // Vec2 centre = PhysicsHelper::cpv2point(cpBodyGetPos(cpShapeGetBody(subShape)))
+    //               + PhysicsHelper::cpv2point(cpCircleShapeGetOffset(subShape));
+
+    // static const int CIRCLE_SEG_NUM = 12;
+    // Vec2 seg[CIRCLE_SEG_NUM] = {};
+
+    // for (int i = 0; i < CIRCLE_SEG_NUM; ++i)
+    // {
+    //     float angle = (float)i * M_PI / (float)CIRCLE_SEG_NUM * 2.0f;
+    //     Vec2 d(radius * cosf(angle), radius * sinf(angle));
+    //     seg[i] = centre + d;
+    // }
+
+    // _drawNode->drawPolygon(seg, CIRCLE_SEG_NUM, fillColor, 1, outlineColor);
 
 }
 
@@ -63,24 +145,36 @@ void GameScene::tick(float dt) {
     int32 velocityIterations = 6;
     int32 positionIterations = 2;
 
+
+    //TODO: Fix the steping.
+
+
     _world->Step(dt, velocityIterations, positionIterations);
-    for (b2Body *b = _world->GetBodyList(); b; b = b->GetNext()) {
-        b2Vec2 position = b->GetPosition();
-        float32 angle = b->GetAngle();
+    this->debugDrawPhysics(_world);
+
+    // for (b2Body *b = _world->GetBodyList(); b; b = b->GetNext()) {
 
 
-        CCLOG("%4.2f %4.2f %4.2f\n", position.x, position.y, angle);
-        // printf("%4.2f %4.2f %4.2f\n", position.x, position.y, angle);
-        if (b->GetUserData() != NULL) {
-            Sprite *ballSprite = (Sprite*) b->GetUserData();
-            auto spritePosition = Point((position.x * PTM_RATIO), (position.y * PTM_RATIO));
 
-            ballSprite->setPosition(spritePosition);
-            ballSprite->setRotation(-1 * CC_RADIANS_TO_DEGREES(b->GetAngle()));
-            // ballSprite.setrot
-            // ballData.rotation = -1 * CC_RADIANS_TO_DEGREES(b->GetAngle());
-        }
-    }
+    //     b2Vec2 position = b->GetPosition();
+    //     float32 angle = b->GetAngle();
+
+
+    //     CCLOG("%4.2f %4.2f %4.2f\n", position.x, position.y, angle);
+    //     // printf("%4.2f %4.2f %4.2f\n", position.x, position.y, angle);
+    //     if (b->GetUserData() != NULL) {
+    //         Sprite *ballSprite = (Sprite*) b->GetUserData();
+    //         auto spritePosition = Point((position.x * PTM_RATIO), (position.y * PTM_RATIO));
+
+    //         ballSprite->setPosition(spritePosition);
+    //         ballSprite->setRotation(-1 * CC_RADIANS_TO_DEGREES(b->GetAngle()));
+    //         // ballSprite.setrot
+    //         // ballData.rotation = -1 * CC_RADIANS_TO_DEGREES(b->GetAngle());
+    //     }
+    // }
+
+    // debugDraw();
+
 
 }
 
@@ -137,7 +231,7 @@ bool GameScene::init()
     _ball = Sprite::create("CloseNormal.png");
     _ball->setPosition(300, 300);
     this->addChild(_ball);
-    
+
 
 
 
@@ -157,7 +251,7 @@ bool GameScene::init()
 
     /////////////////////////////
     // 3. add your codes below...
-    GameScene::initBox2dWorld();
+    this->initBox2dWorld();
 
 //    // add a label shows "Hello World"
 //    // create and initialize a label
