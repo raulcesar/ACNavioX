@@ -66,6 +66,16 @@
 		C4B9AB061AADFCB9008FC2E2 /* GameScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C4B9AB041AADFCB9008FC2E2 /* GameScene.cpp */; };
 		C4B9AB0B1AADFED4008FC2E2 /* hd in Resources */ = {isa = PBXBuildFile; fileRef = C4B9AB071AADFED4008FC2E2 /* hd */; };
 		C4B9AB0D1AADFED4008FC2E2 /* sd in Resources */ = {isa = PBXBuildFile; fileRef = C4B9AB091AADFED4008FC2E2 /* sd */; };
+		C4F2B44F1ADC263B000C08CB /* BasicRUBELayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C4F2B4491ADC263B000C08CB /* BasicRUBELayer.cpp */; };
+		C4F2B4501ADC263B000C08CB /* Box2DDebugDraw.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C4F2B44B1ADC263B000C08CB /* Box2DDebugDraw.cpp */; };
+		C4F2B4561ADC3F98000C08CB /* Navio.json in Resources */ = {isa = PBXBuildFile; fileRef = C4F2B4541ADC3F98000C08CB /* Navio.json */; };
+		C4F2B4571ADC3F98000C08CB /* pinball.json in Resources */ = {isa = PBXBuildFile; fileRef = C4F2B4551ADC3F98000C08CB /* pinball.json */; };
+		C4F2B4731ADC4180000C08CB /* b2dJson.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C4F2B46B1ADC4180000C08CB /* b2dJson.cpp */; };
+		C4F2B4741ADC4180000C08CB /* b2dJson.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C4F2B46B1ADC4180000C08CB /* b2dJson.cpp */; };
+		C4F2B4751ADC4180000C08CB /* b2dJsonImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C4F2B46D1ADC4180000C08CB /* b2dJsonImage.cpp */; };
+		C4F2B4761ADC4180000C08CB /* b2dJsonImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C4F2B46D1ADC4180000C08CB /* b2dJsonImage.cpp */; };
+		C4F2B4771ADC4180000C08CB /* jsoncpp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C4F2B4721ADC4180000C08CB /* jsoncpp.cpp */; };
+		C4F2B4781ADC4180000C08CB /* jsoncpp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C4F2B4721ADC4180000C08CB /* jsoncpp.cpp */; };
 		D44C620C132DFF330009C878 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620B132DFF330009C878 /* OpenAL.framework */; };
 		D44C620E132DFF430009C878 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620D132DFF430009C878 /* AVFoundation.framework */; };
 		D44C6210132DFF4E0009C878 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620F132DFF4E0009C878 /* AudioToolbox.framework */; };
@@ -164,6 +174,20 @@
 		C4B9AB071AADFED4008FC2E2 /* hd */ = {isa = PBXFileReference; lastKnownFileType = folder; path = hd; sourceTree = "<group>"; };
 		C4B9AB091AADFED4008FC2E2 /* sd */ = {isa = PBXFileReference; lastKnownFileType = folder; path = sd; sourceTree = "<group>"; };
 		C4CC8DC81AA7CDC700E1D2CA /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; name = .gitignore; path = ../../.gitignore; sourceTree = "<group>"; };
+		C4F2B4491ADC263B000C08CB /* BasicRUBELayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BasicRUBELayer.cpp; sourceTree = "<group>"; };
+		C4F2B44A1ADC263B000C08CB /* BasicRUBELayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BasicRUBELayer.h; sourceTree = "<group>"; };
+		C4F2B44B1ADC263B000C08CB /* Box2DDebugDraw.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Box2DDebugDraw.cpp; sourceTree = "<group>"; };
+		C4F2B44C1ADC263B000C08CB /* Box2DDebugDraw.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Box2DDebugDraw.h; sourceTree = "<group>"; };
+		C4F2B44D1ADC263B000C08CB /* QueryCallbacks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QueryCallbacks.h; sourceTree = "<group>"; };
+		C4F2B4541ADC3F98000C08CB /* Navio.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Navio.json; sourceTree = "<group>"; };
+		C4F2B4551ADC3F98000C08CB /* pinball.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = pinball.json; sourceTree = "<group>"; };
+		C4F2B46B1ADC4180000C08CB /* b2dJson.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = b2dJson.cpp; sourceTree = "<group>"; };
+		C4F2B46C1ADC4180000C08CB /* b2dJson.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = b2dJson.h; sourceTree = "<group>"; };
+		C4F2B46D1ADC4180000C08CB /* b2dJsonImage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = b2dJsonImage.cpp; sourceTree = "<group>"; };
+		C4F2B46E1ADC4180000C08CB /* b2dJsonImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = b2dJsonImage.h; sourceTree = "<group>"; };
+		C4F2B4701ADC4180000C08CB /* json-forwards.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "json-forwards.h"; sourceTree = "<group>"; };
+		C4F2B4711ADC4180000C08CB /* json.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = json.h; sourceTree = "<group>"; };
+		C4F2B4721ADC4180000C08CB /* jsoncpp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = jsoncpp.cpp; sourceTree = "<group>"; };
 		D44C620B132DFF330009C878 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		D44C620D132DFF430009C878 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		D44C620F132DFF4E0009C878 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -246,6 +270,12 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				C4F2B46A1ADC4180000C08CB /* rubestuff */,
+				C4F2B4491ADC263B000C08CB /* BasicRUBELayer.cpp */,
+				C4F2B44A1ADC263B000C08CB /* BasicRUBELayer.h */,
+				C4F2B44B1ADC263B000C08CB /* Box2DDebugDraw.cpp */,
+				C4F2B44C1ADC263B000C08CB /* Box2DDebugDraw.h */,
+				C4F2B44D1ADC263B000C08CB /* QueryCallbacks.h */,
 				C4CC8DC81AA7CDC700E1D2CA /* .gitignore */,
 				46880B8319C43A87006E1F66 /* Classes */,
 				46880B7519C43A67006E1F66 /* Resources */,
@@ -284,6 +314,8 @@
 		46880B7519C43A67006E1F66 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				C4F2B4541ADC3F98000C08CB /* Navio.json */,
+				C4F2B4551ADC3F98000C08CB /* pinball.json */,
 				C47976CD1AAE451700D6490F /* sprites.plist */,
 				C47976CE1AAE451700D6490F /* sprites.pvr */,
 				C4B9AB071AADFED4008FC2E2 /* hd */,
@@ -358,6 +390,28 @@
 			name = Icons;
 			path = ios;
 			sourceTree = SOURCE_ROOT;
+		};
+		C4F2B46A1ADC4180000C08CB /* rubestuff */ = {
+			isa = PBXGroup;
+			children = (
+				C4F2B46B1ADC4180000C08CB /* b2dJson.cpp */,
+				C4F2B46C1ADC4180000C08CB /* b2dJson.h */,
+				C4F2B46D1ADC4180000C08CB /* b2dJsonImage.cpp */,
+				C4F2B46E1ADC4180000C08CB /* b2dJsonImage.h */,
+				C4F2B46F1ADC4180000C08CB /* json */,
+				C4F2B4721ADC4180000C08CB /* jsoncpp.cpp */,
+			);
+			path = rubestuff;
+			sourceTree = "<group>";
+		};
+		C4F2B46F1ADC4180000C08CB /* json */ = {
+			isa = PBXGroup;
+			children = (
+				C4F2B4701ADC4180000C08CB /* json-forwards.h */,
+				C4F2B4711ADC4180000C08CB /* json.h */,
+			);
+			path = json;
+			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
@@ -474,6 +528,7 @@
 				521A8E6519F0C34300D177D7 /* Default-736h@3x.png in Resources */,
 				521A8EA919F11F5000D177D7 /* fonts in Resources */,
 				50EF62A317ECD613001EB2F8 /* Icon-50.png in Resources */,
+				C4F2B4561ADC3F98000C08CB /* Navio.json in Resources */,
 				5087E78017EB970100C73F5D /* Icon-114.png in Resources */,
 				50EF62A217ECD613001EB2F8 /* Icon-29.png in Resources */,
 				C4B9AB0B1AADFED4008FC2E2 /* hd in Resources */,
@@ -485,6 +540,7 @@
 				5087E77E17EB970100C73F5D /* Default.png in Resources */,
 				521A8E6419F0C34300D177D7 /* Default-667h@2x.png in Resources */,
 				46880B7B19C43A67006E1F66 /* CloseNormal.png in Resources */,
+				C4F2B4571ADC3F98000C08CB /* pinball.json in Resources */,
 				50EF629717ECD46A001EB2F8 /* Icon-58.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -509,12 +565,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C4F2B4751ADC4180000C08CB /* b2dJsonImage.cpp in Sources */,
 				46880B8819C43A87006E1F66 /* AppDelegate.cpp in Sources */,
+				C4F2B44F1ADC263B000C08CB /* BasicRUBELayer.cpp in Sources */,
 				503AE10017EB989F00D1A890 /* AppController.mm in Sources */,
 				503AE10217EB989F00D1A890 /* RootViewController.mm in Sources */,
+				C4F2B4731ADC4180000C08CB /* b2dJson.cpp in Sources */,
 				C47976D31AAE543100D6490F /* Navio.cpp in Sources */,
+				C4F2B4771ADC4180000C08CB /* jsoncpp.cpp in Sources */,
 				C4B9AB061AADFCB9008FC2E2 /* GameScene.cpp in Sources */,
 				503AE10117EB989F00D1A890 /* main.m in Sources */,
+				C4F2B4501ADC263B000C08CB /* Box2DDebugDraw.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -522,7 +583,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C4F2B4781ADC4180000C08CB /* jsoncpp.cpp in Sources */,
 				46880B8919C43A87006E1F66 /* AppDelegate.cpp in Sources */,
+				C4F2B4741ADC4180000C08CB /* b2dJson.cpp in Sources */,
+				C4F2B4761ADC4180000C08CB /* b2dJsonImage.cpp in Sources */,
 				503AE10517EB98FF00D1A890 /* main.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
