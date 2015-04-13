@@ -8,6 +8,8 @@
 #define COCOS2D_DEBUG 1
 
 #include "GameScene.h"
+#include "rubestuff/b2dJson.h"
+#include "Box2DDebugDraw.h"
 USING_NS_CC;
 
 
@@ -29,51 +31,115 @@ Scene* GameScene::createScene()
 
 
 void GameScene::initBox2dWorld() {
-// m_debugDraw = new GLESDebugDraw( PTM_RATIO );
-// world->SetDebugDraw(m_debugDraw);
-
-// world->SetAllowSleeping(false);
-
-// uint32 flags = 0;
-// flags += b2Draw::e_shapeBit;
-// //        flags += b2Draw::e_jointBit;
-// //        flags += b2Draw::e_aabbBit;
-// //        flags += b2Draw::e_pairBit;
-// //        flags += b2Draw::e_centerOfMassBit;
-// m_debugDraw->SetFlags(flags);
-    _drawNode = DrawNode::create();
-
-
-    this->addChild(_drawNode);
-
-
     b2Vec2 gravity;
-    gravity.Set(0.0f, -9.0f);//No gravity
+    gravity.Set(0.0f, -1.0f);//No gravity
     bool doSleep = true;
-    _world = new b2World(gravity);
+    // _world = new b2World(gravity);
 
-    //For now, we will just create a world and a ball to see it work.
-    // Create ball body and shape
-    b2BodyDef ballBodyDef;
-    ballBodyDef.type = b2_dynamicBody;
-    ballBodyDef.position.Set(100 / PTM_RATIO, 300 / PTM_RATIO);
-    ballBodyDef.userData = _ball;
-    _body = _world->CreateBody(&ballBodyDef);
 
-    b2CircleShape circle;
-    circle.m_radius = 26.0 / PTM_RATIO;
+    std::string filename = "Navio.json";
 
-    b2FixtureDef ballShapeDef;
-    ballShapeDef.shape = &circle;
-    ballShapeDef.density = 1.0f;
-    ballShapeDef.friction = 0.2f;
-    ballShapeDef.restitution = 0.8f;
-    _body->CreateFixture(&ballShapeDef);
-    //Call tick method
-    //TODO: Review fixed time tick method (from platformer)
+
+    CCLOG("filname: %s", filename.c_str());
+
+    // Find out the absolute path for the file
+    std::string fullpath = CCFileUtils::getInstance()->fullPathForFilename(filename.c_str());
+
+    // This will print out the actual location on disk that the file is read from.
+    // When using the simulator, exporting your RUBE scene to this folder means
+    // you can edit the scene and reload it without needing to restart the app.
+    CCLOG("Full path is: %s", fullpath.c_str());
+
+    // Create the world from the contents of the RUBE .json file. If something
+    // goes wrong, m_world will remain NULL and errMsg will contain some info
+    // about what happened.
+    b2dJson json;
+    std::string errMsg;
+    std::string jsonContent = CCFileUtils::getInstance()->getStringFromFile(fullpath.c_str());
+    _world = json.readFromString(jsonContent, errMsg);
+
+    if ( _world ) {
+        CCLOG("Loaded JSON ok");
+
+        // Set up a debug draw so we can see what's going on in the physics engine.
+        // The scale for rendering will be handled by the layer scale, which will affect
+        // the entire layer, so we keep the PTM ratio here to 1 (ie. one physics unit
+        // will be one pixel)
+        //TODO: This is all fucked up. We need to destory.
+        _drawNode = DrawNode::create();
+
+
+        this->addChild(_drawNode);
+
+
+
+        Box2DDebugDraw* m_debugDraw;            // used to draw debug data
+        m_debugDraw = new Box2DDebugDraw(_drawNode, 1);
+
+        // set the debug draw to show fixtures, and let the world know about it
+        m_debugDraw->SetFlags( b2Draw::e_shapeBit | b2Draw::e_jointBit );
+        _world->SetDebugDraw(m_debugDraw);
+
+        // This body is needed if we want to use a mouse joint to drag things around.
+        // b2BodyDef bd;
+        // m_mouseJointGroundBody = _world->CreateBody( &bd );
+
+        // afterLoadProcessing(&json);
+    }
+    else {
+        CCLOG("%s", errMsg.c_str());
+    }
     this->schedule(CC_SCHEDULE_SELECTOR(GameScene::tick), 0, CC_REPEAT_FOREVER, 0);
-    // this->schedule(schedule_selector(GameScene::tick));
 }
+
+
+
+// void GameScene::initBox2dWorldOLD() {
+// // m_debugDraw = new GLESDebugDraw( PTM_RATIO );
+// // world->SetDebugDraw(m_debugDraw);
+
+// // world->SetAllowSleeping(false);
+
+// // uint32 flags = 0;
+// // flags += b2Draw::e_shapeBit;
+// // //        flags += b2Draw::e_jointBit;
+// // //        flags += b2Draw::e_aabbBit;
+// // //        flags += b2Draw::e_pairBit;
+// // //        flags += b2Draw::e_centerOfMassBit;
+// // m_debugDraw->SetFlags(flags);
+//     _drawNode = DrawNode::create();
+
+
+//     this->addChild(_drawNode);
+
+
+//     b2Vec2 gravity;
+//     gravity.Set(0.0f, -9.0f);//No gravity
+//     bool doSleep = true;
+//     _world = new b2World(gravity);
+
+//     //For now, we will just create a world and a ball to see it work.
+//     // Create ball body and shape
+//     b2BodyDef ballBodyDef;
+//     ballBodyDef.type = b2_dynamicBody;
+//     ballBodyDef.position.Set(100 / PTM_RATIO, 300 / PTM_RATIO);
+//     ballBodyDef.userData = _ball;
+//     _body = _world->CreateBody(&ballBodyDef);
+
+//     b2CircleShape circle;
+//     circle.m_radius = 26.0 / PTM_RATIO;
+
+//     b2FixtureDef ballShapeDef;
+//     ballShapeDef.shape = &circle;
+//     ballShapeDef.density = 1.0f;
+//     ballShapeDef.friction = 0.2f;
+//     ballShapeDef.restitution = 0.8f;
+//     _body->CreateFixture(&ballShapeDef);
+//Call tick method
+//TODO: Review fixed time tick method (from platformer)
+// this->schedule(CC_SCHEDULE_SELECTOR(GameScene::tick), 0, CC_REPEAT_FOREVER, 0);
+// this->schedule(schedule_selector(GameScene::tick));
+// }
 
 void GameScene::debugDrawPhysics(b2World *_world) {
     const Color4F fillColor(1.0f, 0.0f, 0.0f, 0.3f);

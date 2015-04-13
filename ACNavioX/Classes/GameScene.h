@@ -14,6 +14,7 @@
 #include "cocos2d.h"
 #include "Box2D/Box2D.h"
 
+// class b2dJson;
 
 class GameScene : public cocos2d::Layer
 {
