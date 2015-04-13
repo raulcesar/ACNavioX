@@ -32,10 +32,20 @@ Scene* GameScene::createScene()
 
 void GameScene::initBox2dWorld() {
     b2Vec2 gravity;
-    gravity.Set(0.0f, -1.0f);//No gravity
-    bool doSleep = true;
+    gravity.Set(0.0f, 0.0f);//No gravity
+//    bool doSleep = true;
     // _world = new b2World(gravity);
 
+    
+    //Seting the anchor point... this will be a diferent layer later...
+    setAnchorPoint( Vec2(0,0) );
+    
+    // set the starting scale and offset values from the subclass
+    setPosition( initialWorldOffset() );
+    setScale( initialWorldScale() );
+    
+    // load the world from RUBE .json file (this will also call afterLoadProcessing)
+    
 
     std::string filename = "Navio.json";
 
@@ -57,6 +67,7 @@ void GameScene::initBox2dWorld() {
     std::string errMsg;
     std::string jsonContent = CCFileUtils::getInstance()->getStringFromFile(fullpath.c_str());
     _world = json.readFromString(jsonContent, errMsg);
+    _world->SetGravity(gravity);
 
     if ( _world ) {
         CCLOG("Loaded JSON ok");
@@ -186,25 +197,33 @@ void GameScene::debugDrawPhysics(b2World *_world) {
 
     }
 
+}
+// Override this in subclasses to set the inital view position
+Point GameScene::initialWorldOffset()
+{
+    // This function should return the location in pixels to place
+    // the (0,0) point of the physics world. The screen position
+    // will be relative to the bottom left corner of the screen.
+    
+    //place (0,0) of physics world at center of bottom edge of screen
+    Size s = Director::getInstance()->getWinSize();
+    return Vec2( s.width/2, 100 );
+}
 
-    //Get the shape...
 
-    // float radius = PhysicsHelper::cpfloat2float(cpCircleShapeGetRadius(subShape));
-    // Vec2 centre = PhysicsHelper::cpv2point(cpBodyGetPos(cpShapeGetBody(subShape)))
-    //               + PhysicsHelper::cpv2point(cpCircleShapeGetOffset(subShape));
-
-    // static const int CIRCLE_SEG_NUM = 12;
-    // Vec2 seg[CIRCLE_SEG_NUM] = {};
-
-    // for (int i = 0; i < CIRCLE_SEG_NUM; ++i)
-    // {
-    //     float angle = (float)i * M_PI / (float)CIRCLE_SEG_NUM * 2.0f;
-    //     Vec2 d(radius * cosf(angle), radius * sinf(angle));
-    //     seg[i] = centre + d;
-    // }
-
-    // _drawNode->drawPolygon(seg, CIRCLE_SEG_NUM, fillColor, 1, outlineColor);
-
+// Override this in subclasses to set the inital view scale
+float GameScene::initialWorldScale()
+{
+    // This method should return the number of pixels for one physics unit.
+    // When creating the scene in RUBE I can see that the jointTypes scene
+    // is about 8 units high, so I want the height of the view to be about
+    // 10 units, which for iPhone in landscape (480x320) we would return 32.
+    // But for an iPad in landscape (1024x768) we would return 76.8, so to
+    // handle the general case, we can make the return value depend on the
+    // current screen height.
+    
+    Size s = Director::getInstance()->getWinSize();
+    return s.height / 50; //screen will be 10 physics units high
 }
 
 void GameScene::tick(float dt) {
@@ -216,7 +235,7 @@ void GameScene::tick(float dt) {
 
 
     _world->Step(dt, velocityIterations, positionIterations);
-    this->debugDrawPhysics(_world);
+//    this->debugDrawPhysics(_world);
 
     // for (b2Body *b = _world->GetBodyList(); b; b = b->GetNext()) {
 
@@ -240,9 +259,35 @@ void GameScene::tick(float dt) {
     // }
 
     // debugDraw();
-
-
 }
+
+void GameScene::draw(Renderer *renderer, const Mat4 &transform, uint32_t transformUpdated)
+{
+    if ( !_world )
+        return;
+    
+    // debug draw display will be on top of anything else
+    Layer::draw(renderer, transform, transformUpdated);
+    CCLOG("Should be drawing shit at this satege!!!");
+
+    _drawNode->clear();
+    _world->DrawDebugData();
+    
+    // Draw mouse joint line
+//    if ( m_mouseJoint ) {
+//        b2Vec2 p1 = m_mouseJoint->GetAnchorB();
+//        b2Vec2 p2 = m_mouseJoint->GetTarget();
+//        
+//        b2Color c;
+//        c.Set(0.0f, 1.0f, 0.0f);
+//        m_debugDraw->DrawPoint(p1, 4.0f, c);
+//        m_debugDraw->DrawPoint(p2, 4.0f, c);
+//        
+//        c.Set(0.8f, 0.8f, 0.8f);
+//        m_debugDraw->DrawSegment(p1, p2, c);
+//    }
+}
+
 
 // on "init" you need to initialize your instance
 bool GameScene::init()
@@ -282,21 +327,23 @@ bool GameScene::init()
 
 
     //Cria navio a partir do spritesheet.
-    auto navioTemp = Sprite::createWithSpriteFrameName("navior2l0.png");
-//    navioTemp->setScale(-1, 1);
-    navioTemp->setPosition(Vec2(0, 0));
-    navioTemp->setAnchorPoint(Vec2(0, 0));
-    navioTemp->setFlippedX(true);
-
-
-    this->addChild(skyLayer);
-    this->addChild(navioTemp);
-
-
-    //Cria nossa bola de teste physics
-    _ball = Sprite::create("CloseNormal.png");
-    _ball->setPosition(300, 300);
-    this->addChild(_ball);
+//    auto navioTemp = Sprite::createWithSpriteFrameName("navior2l0.png");
+////    navioTemp->setScale(-1, 1);
+//    navioTemp->setPosition(Vec2(0, 0));
+//    navioTemp->setAnchorPoint(Vec2(0, 0));
+//    navioTemp->setFlippedX(true);
+//
+//
+//    
+//    
+//    this->addChild(skyLayer);
+//    this->addChild(navioTemp);
+//
+//
+//    //Cria nossa bola de teste physics
+//    _ball = Sprite::create("CloseNormal.png");
+//    _ball->setPosition(300, 300);
+//    this->addChild(_ball);
 
 
 
@@ -317,6 +364,9 @@ bool GameScene::init()
 
     /////////////////////////////
     // 3. add your codes below...
+    
+    
+    
     this->initBox2dWorld();
 
 //    // add a label shows "Hello World"

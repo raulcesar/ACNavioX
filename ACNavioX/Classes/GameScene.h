@@ -27,6 +27,7 @@ public:
     
     // a selector callback
     void menuCloseCallback(cocos2d::Ref* pSender);
+    virtual void draw(cocos2d::Renderer* renderer, const cocos2d::Mat4 &transform, uint32_t transformUpdated);  // standard Cocos2d layer method
     
     // implement the "static create()" method manually
     CREATE_FUNC(GameScene);
@@ -39,6 +40,9 @@ private:
     b2Body * _body;
     cocos2d::Sprite * _ball;
     cocos2d::DrawNode * _drawNode;
+    virtual cocos2d::Point initialWorldOffset();              // override this in subclasses to set the inital view position
+    virtual float initialWorldScale();                          // override this in subclasses to set the initial view scale
+
 };
 
 
