@@ -1,5 +1,6 @@
 #include "AppDelegate.h"
 #include "GameScene.h"
+#include "BasicRUBELayer.h"
 
 USING_NS_CC;
 
@@ -44,6 +45,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     if (screenSize.width > 2024) {
         //retina ipad
         resDirOrders.push_back("hd");
+        resDirOrders.push_back("Resources");
         glview->setDesignResolutionSize(2048, 1536, ResolutionPolicy::NO_BORDER);
     }
     
@@ -65,6 +67,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
     // create a scene. it's an autorelease object
     auto scene = GameScene::createScene();
+    // auto scene = BasicRUBELayer::scene();
 
     // run
     director->runWithScene(scene);

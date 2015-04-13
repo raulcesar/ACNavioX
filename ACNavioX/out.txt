@@ -1,0 +1,77 @@
+-- OpenGL include dirs: /usr/include
+-- GLEW include dirs: /usr/include
+-- PkgConfig found
+-- GLFW3 include dirs: /usr/include/GLFW
+-- FMODEX include dirs: /home/raul/DevProjects/games/ACNavioX/ACNavioX/cocos2d/external/linux-specific/fmod/include/64-bit
+-- Fontconfig include dirs: /usr/include/freetype2;/usr/include/libpng16;/usr/include/harfbuzz;/usr/include/freetype2;/usr/include/libpng16;/usr/include/harfbuzz
+-- Freetype include dirs: /home/raul/DevProjects/games/ACNavioX/ACNavioX/cocos2d/external/freetype2/include/linux;/home/raul/DevProjects/games/ACNavioX/ACNavioX/cocos2d/external/freetype2/include/linux
+-- WebP include dirs: /home/raul/DevProjects/games/ACNavioX/ACNavioX/cocos2d/external/webp/include/linux
+-- Box2D include dirs: /home/raul/DevProjects/games/ACNavioX/ACNavioX/cocos2d/external/box2d/include
+-- TinyXML2 include dirs: /home/raul/DevProjects/games/ACNavioX/ACNavioX/cocos2d/external/tinyxml2
+-- JPEG include dirs: /home/raul/DevProjects/games/ACNavioX/ACNavioX/cocos2d/external/jpeg/include/linux
+-- ZLIB include dirs: /usr/include
+-- MINIZIP include dirs: /home/raul/DevProjects/games/ACNavioX/ACNavioX/cocos2d/external/unzip;/usr/include
+-- PNG include dirs: /usr/include;/usr/include
+-- TIFF include dirs: /home/raul/DevProjects/games/ACNavioX/ACNavioX/cocos2d/external/tiff/include/linux
+-- WEBSOCKETS include dirs: /home/raul/DevProjects/games/ACNavioX/ACNavioX/cocos2d/external/websockets/include/linux
+-- CURL include dirs: 
+-- Flatbuffers include dirs: /home/raul/DevProjects/games/ACNavioX/ACNavioX/cocos2d/external
+-- OPENGL add to include_dirs: /usr/include
+-- OPENGL libs added to 'cocos2d': /usr/lib64/libGLU.so;/usr/lib64/libGL.so
+-- GLEW add to include_dirs: /usr/include
+-- GLEW libs added to 'cocos2d': /usr/lib64/libGLEW.so
+-- GLFW3 add to include_dirs: /usr/include/GLFW
+-- GLFW3 libs added to 'cocos2d': glfw
+-- GLFW3 add definitions: -DGLFW_DLL
+-- FMODEX add to include_dirs: /home/raul/DevProjects/games/ACNavioX/ACNavioX/cocos2d/external/linux-specific/fmod/include/64-bit
+-- FMODEX libs added to 'cocos2d': /home/raul/DevProjects/games/ACNavioX/ACNavioX/cocos2d/external/linux-specific/fmod/prebuilt/64-bit/libfmodex64.so;/home/raul/DevProjects/games/ACNavioX/ACNavioX/cocos2d/external/linux-specific/fmod/prebuilt/64-bit/libfmodexL64.so
+-- FONTCONFIG add to include_dirs: /usr/include/freetype2;/usr/include/libpng16;/usr/include/harfbuzz;/usr/include/freetype2;/usr/include/libpng16;/usr/include/harfbuzz
+-- FONTCONFIG libs added to 'cocos2d': fontconfig;freetype
+-- THREADS libs added to 'cocos2d': -lpthread
+-- ZLIB add to include_dirs: /usr/include
+-- ZLIB libs added to 'cocos2d': /usr/lib64/libz.so
+-- MINIZIP add to include_dirs: /home/raul/DevProjects/games/ACNavioX/ACNavioX/cocos2d/external/unzip;/usr/include
+-- MINIZIP libs added to 'cocos2d': unzip;/usr/lib64/libz.so
+-- JPEG add to include_dirs: /home/raul/DevProjects/games/ACNavioX/ACNavioX/cocos2d/external/jpeg/include/linux
+-- JPEG libs added to 'cocos2d': /home/raul/DevProjects/games/ACNavioX/ACNavioX/cocos2d/external/jpeg/prebuilt/linux/64-bit/libjpeg.a
+-- PNG add to include_dirs: /usr/include;/usr/include
+-- PNG libs added to 'cocos2d': /usr/lib64/libpng.so;/usr/lib64/libz.so
+-- TIFF add to include_dirs: /home/raul/DevProjects/games/ACNavioX/ACNavioX/cocos2d/external/tiff/include/linux
+-- TIFF libs added to 'cocos2d': /home/raul/DevProjects/games/ACNavioX/ACNavioX/cocos2d/external/tiff/prebuilt/linux/64-bit/libtiff.a
+-- TinyXML2 add to include_dirs: /home/raul/DevProjects/games/ACNavioX/ACNavioX/cocos2d/external/tinyxml2
+-- TinyXML2 libs added to 'cocos2d': tinyxml2
+-- FREETYPE add to include_dirs: /home/raul/DevProjects/games/ACNavioX/ACNavioX/cocos2d/external/freetype2/include/linux;/home/raul/DevProjects/games/ACNavioX/ACNavioX/cocos2d/external/freetype2/include/linux
+-- FREETYPE libs added to 'cocos2d': /home/raul/DevProjects/games/ACNavioX/ACNavioX/cocos2d/external/freetype2/prebuilt/linux/64-bit/libfreetype.a
+-- WEBSOCKETS add to include_dirs: /home/raul/DevProjects/games/ACNavioX/ACNavioX/cocos2d/external/websockets/include/linux
+-- WEBSOCKETS libs added to 'cocos2d': /home/raul/DevProjects/games/ACNavioX/ACNavioX/cocos2d/external/websockets/prebuilt/linux/64-bit/libwebsockets.a
+-- CURL libs added to 'cocos2d': curl
+-- FLATBUFFERS add to include_dirs: /home/raul/DevProjects/games/ACNavioX/ACNavioX/cocos2d/external
+-- XXHASH add to include_dirs: /home/raul/DevProjects/games/ACNavioX/ACNavioX/cocos2d/external/xxhash
+-- XXHASH libs added to 'cocos2d': xxhash
+-- WEBP add to include_dirs: /home/raul/DevProjects/games/ACNavioX/ACNavioX/cocos2d/external/webp/include/linux
+-- WEBP libs added to 'cocos2d': /home/raul/DevProjects/games/ACNavioX/ACNavioX/cocos2d/external/webp/prebuilt/linux/64-bit/libwebp.a
+-- Box2D add to include_dirs: /home/raul/DevProjects/games/ACNavioX/ACNavioX/cocos2d/external/box2d/include
+-- Box2D libs added to 'cocos2d': box2d
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/raul/DevProjects/games/ACNavioX/ACNavioX/linux-build
+[  1%] [  1%] [  1%] Built target xxhash
+Built target tinyxml2
+Built target unzip
+[  9%] Built target box2d
+[  9%] [ 11%] Built target ACNavioX_CORE_PRE_BUILD
+Built target flatbuffers
+ACNavioX_PRE_BUILD ...
+[ 11%] Built target ACNavioX_PRE_BUILD
+[100%] Built target cocos2d
+[100%] Building CXX object CMakeFiles/ACNavioX.dir/Classes/BasicRUBELayer.cpp.o
+CMakeFiles/ACNavioX.dir/build.make:123: recipe for target 'CMakeFiles/ACNavioX.dir/Classes/BasicRUBELayer.cpp.o' failed
+CMakeFiles/Makefile2:65: recipe for target 'CMakeFiles/ACNavioX.dir/all' failed
+Makefile:75: recipe for target 'all' failed
+Running command: compile
+Building mode: debug
+running: 'cmake ..'
+
+running: 'make -j4'
+
+Error running command, return code: 2

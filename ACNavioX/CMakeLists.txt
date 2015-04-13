@@ -111,18 +111,29 @@ include_directories(
   /usr/include/GLFW
   ${COCOS2D_ROOT}/cocos
   Classes
+  Classes/rubestuff
   ${COCOS2D_ROOT}/external
 )
 
 set(GAME_SRC
+  Classes/rubestuff/jsoncpp.cpp
+  Classes/rubestuff/b2dJsonImage.cpp
+  Classes/rubestuff/b2dJson.cpp
   Classes/AppDelegate.cpp
   Classes/GameScene.cpp
+  Classes/Box2DDebugDraw.cpp
+  Classes/BasicRUBELayer.cpp
   ${PLATFORM_SPECIFIC_SRC}
 )
 
 set(GAME_HEADERS
+
+  Classes/rubestuff/b2dJsonImage.h
+  Classes/rubestuff/b2dJson.h
   Classes/AppDelegate.h
   Classes/GameScene.h
+  Classes/Box2DDebugDraw.h
+  Classes/BasicRUBELayer.h
   ${PLATFORM_SPECIFIC_HEADERS}
 )
 
