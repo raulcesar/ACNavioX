@@ -40,7 +40,7 @@ private:
     b2Body * _body;
     cocos2d::Sprite * _ball;
     cocos2d::DrawNode * _drawNode;
-    virtual cocos2d::Point initialWorldOffset();              // override this in subclasses to set the inital view position
+    virtual cocos2d::Vec2 initialWorldOffset();              // override this in subclasses to set the inital view position
     virtual float initialWorldScale();                          // override this in subclasses to set the initial view scale
 
 };

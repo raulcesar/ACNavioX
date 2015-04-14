@@ -9,6 +9,64 @@
 			"angle" : 0,
 			"angularVelocity" : 0,
 			"awake" : true,
+			"linearVelocity" : 0,
+			"name" : "lhook",
+			"position" : 
+			{
+				"x" : -2.310651302337646,
+				"y" : 6.199651241302490
+			},
+			"type" : 0
+		},
+		
+		{
+			"angle" : 0,
+			"angularVelocity" : 0,
+			"awake" : true,
+			"linearVelocity" : 0,
+			"name" : "rhook",
+			"position" : 
+			{
+				"x" : 2.096109867095947,
+				"y" : 5.984209537506104
+			},
+			"type" : 0
+		},
+		
+		{
+			"angle" : 0,
+			"angularVelocity" : 0,
+			"awake" : true,
+			"fixture" : 
+			[
+				
+				{
+					"circle" : 
+					{
+						"center" : 0,
+						"radius" : 0.5
+					},
+					"density" : 1,
+					"friction" : 0.2,
+					"name" : "fixture1"
+				}
+			],
+			"linearVelocity" : 0,
+			"massData-I" : 0.09817477315664291,
+			"massData-mass" : 0.7853981852531433,
+			"name" : "Ball",
+			"position" : 
+			{
+				"x" : 0.6271886825561523,
+				"y" : 7.139760017395020
+			},
+			"type" : 2
+		},
+		
+		{
+			"angle" : 0,
+			"angularVelocity" : 0,
+			"awake" : true,
 			"fixture" : 
 			[
 				
@@ -84,8 +142,12 @@
 				"y" : -0.2514589726924896
 			},
 			"massData-mass" : 9.731511116027832,
-			"name" : "body0",
-			"position" : 0,
+			"name" : "shipHull",
+			"position" : 
+			{
+				"x" : 0.1175136566162109,
+				"y" : 2.644056797027588
+			},
 			"type" : 2
 		}
 	],
@@ -131,14 +193,14 @@
 	"gravity" : 
 	{
 		"x" : 0,
-		"y" : -1
+		"y" : -10
 	},
 	"image" : 
 	[
 		
 		{
 			"aspectScale" : 1,
-			"body" : 0,
+			"body" : 3,
 			"center" : 0,
 			"corners" : 
 			{
@@ -152,7 +214,7 @@
 				"y" : [ -1.5, -1.5, 1.5, 1.5 ]
 			},
 			"file" : "../../ArtOriginal/Navio_Augusto.png",
-			"filter" : 1,
+			"filter" : 0,
 			"glDrawElements" : [ 0, 1, 2, 2, 3, 0 ],
 			"glTexCoordPointer" : [ 0.0, 0.0, 1, 0.0, 1, 1, 0.0, 1 ],
 			"glVertexPointer" : 
@@ -169,6 +231,45 @@
 			"name" : "image0",
 			"opacity" : 0.5,
 			"scale" : 3
+		}
+	],
+	"joint" : 
+	[
+		
+		{
+			"anchorA" : 0,
+			"anchorB" : 
+			{
+				"x" : -1.958109974861145,
+				"y" : 2.537139892578125
+			},
+			"bodyA" : 0,
+			"bodyB" : 3,
+			"dampingRatio" : 0,
+			"frequency" : 0,
+			"length" : 2.919304847717285,
+			"name" : "joint0",
+			"type" : "distance"
+		},
+		
+		{
+			"anchorA" : 
+			{
+				"x" : -0.01958465576171875,
+				"y" : 0.8421812057495117
+			},
+			"anchorB" : 
+			{
+				"x" : 1.939425468444824,
+				"y" : 3.183464050292969
+			},
+			"bodyA" : 1,
+			"bodyB" : 3,
+			"dampingRatio" : 0,
+			"frequency" : 0,
+			"length" : 3.176132440567017,
+			"name" : "joint1",
+			"type" : "distance"
 		}
 	],
 	"positionIterations" : 3,

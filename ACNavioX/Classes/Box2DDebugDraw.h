@@ -9,7 +9,7 @@ struct b2AABB;
 class Box2DDebugDraw : public b2Draw
 {
 public:
-    Box2DDebugDraw(cocos2d::DrawNode* drawNode, float aRatio);
+    Box2DDebugDraw(cocos2d::DrawNode* drawNode, float aRatio, cocos2d::Vec2 offset);
 
 	void DrawPolygon(const b2Vec2* aVertices, int32 aVertexCount, const b2Color& aColor);
 	void DrawSolidPolygon(const b2Vec2* aVertices, int32 aVertexCount, const b2Color& aColor);
@@ -22,9 +22,11 @@ public:
 	void DrawAABB(b2AABB* aAabb, const b2Color& aColor);
 
 private:
+	void DrawPolygonGeneric(const b2Vec2* aVertices, int32 aVertexCount, const b2Color& aColor, bool solid);
 	static const int DEBUG_DRAW_MAX_VERTICES = 64;
 	static const int DEBUG_DRAW_CIRCLE_SEGMENTS = 16;
 	float mRatio;
+	cocos2d::Vec2 offset;
     cocos2d::Point mVertices[DEBUG_DRAW_MAX_VERTICES];
     cocos2d::DrawNode* drawNode;
 };

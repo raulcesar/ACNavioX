@@ -1,5 +1,6 @@
 
 {
+  "activeScript" : "b",
   "collisionbitplanes" : 
   {
     "names" : 
@@ -126,9 +127,83 @@
           "y" : -0.2514589726924896
         },
         "massData-mass" : 9.731511116027832,
-        "name" : "body0",
-        "position" : 0,
+        "name" : "shipHull",
+        "position" : 
+        {
+          "x" : 0.1175136566162109,
+          "y" : 2.644056797027588
+        },
         "type" : "dynamic"
+      },
+      
+      {
+        "angle" : 0,
+        "angularVelocity" : 0,
+        "awake" : true,
+        "fixture" : 
+        [
+          
+          {
+            "density" : 1,
+            "friction" : 0.2,
+            "id" : 4,
+            "name" : "fixture1",
+            "shapes" : 
+            [
+              
+              {
+                "radius" : 0.5,
+                "type" : "circle"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : [ 0.0 ],
+              "y" : [ 0.0 ]
+            }
+          }
+        ],
+        "id" : 6,
+        "linearVelocity" : 0,
+        "massData-I" : 0.09817477315664291,
+        "massData-mass" : 0.7853981852531433,
+        "name" : "Ball",
+        "position" : 
+        {
+          "x" : 0.6271886825561523,
+          "y" : 7.139760017395020
+        },
+        "type" : "dynamic"
+      },
+      
+      {
+        "angle" : 0,
+        "angularVelocity" : 0,
+        "awake" : true,
+        "id" : 7,
+        "linearVelocity" : 0,
+        "name" : "rhook",
+        "position" : 
+        {
+          "x" : 2.096109867095947,
+          "y" : 5.984209537506104
+        },
+        "type" : "static"
+      },
+      
+      {
+        "angle" : 0,
+        "angularVelocity" : 0,
+        "awake" : true,
+        "id" : 8,
+        "linearVelocity" : 0,
+        "name" : "lhook",
+        "position" : 
+        {
+          "x" : -2.310651302337646,
+          "y" : 6.199651241302490
+        },
+        "type" : "static"
       }
     ],
     "metaimage" : 
@@ -139,12 +214,55 @@
         "body" : 1,
         "center" : 0,
         "file" : "Navio_Augusto.png",
-        "filter" : 1,
+        "filter" : 0,
         "flip" : false,
         "id" : 1,
         "name" : "image0",
         "opacity" : 0.5,
         "scale" : 3
+      }
+    ],
+    "metajoint" : 
+    [
+      
+      {
+        "anchorA" : 0,
+        "anchorB" : 
+        {
+          "x" : -1.958109974861145,
+          "y" : 2.537139892578125
+        },
+        "bodyA" : 8,
+        "bodyB" : 1,
+        "collideConnected" : false,
+        "dampingRatio" : 0,
+        "frequency" : 0,
+        "id" : 5,
+        "length" : 2.919304847717285,
+        "name" : "joint0",
+        "type" : "distance"
+      },
+      
+      {
+        "anchorA" : 
+        {
+          "x" : -0.01958465576171875,
+          "y" : 0.8421812057495117
+        },
+        "anchorB" : 
+        {
+          "x" : 1.939425349235535,
+          "y" : 3.183464050292969
+        },
+        "bodyA" : 7,
+        "bodyB" : 1,
+        "collideConnected" : false,
+        "dampingRatio" : 0,
+        "frequency" : 0,
+        "id" : 6,
+        "length" : 3.176132440567017,
+        "name" : "joint1",
+        "type" : "distance"
       }
     ],
     "positionIterations" : 3,

@@ -29,6 +29,8 @@ set(APP_NAME ACNavioX)
 project (${APP_NAME})
 
 set(COCOS2D_ROOT ${CMAKE_SOURCE_DIR}/cocos2d)
+#TODO: for release mode remember to change
+set(CMAKE_BUILD_TYPE DEBUG)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${COCOS2D_ROOT}/cmake/Modules/")
 include(CocosBuildHelpers)
@@ -122,7 +124,6 @@ set(GAME_SRC
   Classes/AppDelegate.cpp
   Classes/GameScene.cpp
   Classes/Box2DDebugDraw.cpp
-  Classes/BasicRUBELayer.cpp
   ${PLATFORM_SPECIFIC_SRC}
 )
 
@@ -133,7 +134,6 @@ set(GAME_HEADERS
   Classes/AppDelegate.h
   Classes/GameScene.h
   Classes/Box2DDebugDraw.h
-  Classes/BasicRUBELayer.h
   ${PLATFORM_SPECIFIC_HEADERS}
 )
 
