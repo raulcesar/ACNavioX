@@ -9,6 +9,7 @@
 
 #include "GameScene.h"
 #include "rubestuff/b2dJson.h"
+
 #include "Box2DDebugDraw.h"
 USING_NS_CC;
 
@@ -34,17 +35,17 @@ void GameScene::initBox2dWorld() {
     b2Vec2 gravity;
     gravity.Set(0.0f, -10.0f);//No gravity
 
-    
+
     //Seting the anchor point... This will be a diferent layer later...
-    setAnchorPoint( Vec2(0,0) );
-    
+    setAnchorPoint( Vec2(0, 0) );
+
     // set the starting scale and offset values from the subclass
     // float ratio = initialWorldScale();
     // setPosition( initialWorldOffset() );
     // setScale( ratio );
-    
+
     // load the world from RUBE .json file (this will also call afterLoadProcessing)
-    
+
 
     std::string filename = "Navio.json";
 
@@ -79,10 +80,10 @@ void GameScene::initBox2dWorld() {
 
 
         Box2DDebugDraw* m_debugDraw;            // used to draw debug data
-        
+
 // -2.76
         // Vec2 offset = Vec2(2.76,1.5);
-        Vec2 offset = Vec2(4.76,2.5);
+        Vec2 offset = Vec2(4.76, 2.5);
         m_debugDraw = new Box2DDebugDraw(_drawNode, 50, offset);
 
         // set the debug draw to show fixtures, and let the world know about it
@@ -93,14 +94,39 @@ void GameScene::initBox2dWorld() {
         // b2BodyDef bd;
         // m_mouseJointGroundBody = _world->CreateBody( &bd );
 
-        // afterLoadProcessing(&json);
+        afterLoadProcessing(&json);
     }
     else {
         CCLOG("%s", errMsg.c_str());
     }
+
+    BoyancyContactListener *contactListener = new BoyancyContactListener();
+    contactListener->m_layer = this;
+
+    _world->SetContactListener( contactListener );
+
     this->schedule(CC_SCHEDULE_SELECTOR(GameScene::tick), 0, CC_REPEAT_FOREVER, 0);
 }
 
+
+void GameScene::afterLoadProcessing(b2dJson* json)
+{
+    //For now, I will put a string into the userData. Later this needs to be cleaned up.
+    bodyUserData* shipData = new bodyUserData;
+    shipData->name = "ship";
+
+
+    bodyUserData* waterData = new bodyUserData;
+    waterData->name = "water";
+
+    b2Body* ship = json->getBodyByName("shipHull");
+    ship->SetUserData(shipData);
+    b2Body* water = json->getBodyByName("water");
+    water->SetUserData(waterData);
+
+    CCLOG("INSIDE afterLoadProcessing");
+    
+}
 
 
 // Override this in subclasses to set the inital view position
@@ -109,10 +135,10 @@ Vec2 GameScene::initialWorldOffset()
     // This function should return the location in pixels to place
     // the (0,0) point of the physics world. The screen position
     // will be relative to the bottom left corner of the screen.
-    
+
     //place (0,0) of physics world at center of bottom edge of screen
     Size s = Director::getInstance()->getWinSize();
-    return Vec2( s.width/2, 100.0f );
+    return Vec2( s.width / 2, 100.0f );
 }
 
 
@@ -126,7 +152,7 @@ float GameScene::initialWorldScale()
     // But for an iPad in landscape (1024x768) we would return 76.8, so to
     // handle the general case, we can make the return value depend on the
     // current screen height.
-    
+
     Size s = Director::getInstance()->getWinSize();
     return s.height / 50; //screen will be 10 physics units high
 }
@@ -169,23 +195,23 @@ void GameScene::draw(Renderer *renderer, const Mat4 &transform, uint32_t transfo
 {
     if ( !_world )
         return;
-    
+
     // debug draw display will be on top of anything else
     Layer::draw(renderer, transform, transformUpdated);
     _drawNode->clear();
     _world->DrawDebugData();
 
-    
+
     // Draw mouse joint line
 //    if ( m_mouseJoint ) {
 //        b2Vec2 p1 = m_mouseJoint->GetAnchorB();
 //        b2Vec2 p2 = m_mouseJoint->GetTarget();
-//        
+//
 //        b2Color c;
 //        c.Set(0.0f, 1.0f, 0.0f);
 //        m_debugDraw->DrawPoint(p1, 4.0f, c);
 //        m_debugDraw->DrawPoint(p2, 4.0f, c);
-//        
+//
 //        c.Set(0.8f, 0.8f, 0.8f);
 //        m_debugDraw->DrawSegment(p1, p2, c);
 //    }
@@ -214,7 +240,6 @@ bool GameScene::init()
     /*
        1 Background (vai ser refatorado num node
        2 Navio.
-
      */
 
 
@@ -242,15 +267,13 @@ bool GameScene::init()
 //    navioTemp->setFlippedX(true);
 //
 //
-//    
-//    
+//
+//
 
     //TODO: This is all fucked up. We need to destory.
     _drawNode = DrawNode::create();
     this->addChild(_drawNode);
-
-
-   this->addChild(skyLayer);
+    this->addChild(skyLayer);
 
 
 //    this->addChild(navioTemp);
@@ -280,7 +303,7 @@ bool GameScene::init()
 
     /////////////////////////////
     // 3. add your codes below...
-    
+
     this->initBox2dWorld();
 
 //    // add a label shows "Hello World"
@@ -303,10 +326,26 @@ bool GameScene::init()
 //
 //    // add the sprite as a child to this layer
 //    this->addChild(sprite, 0);
+    this->initEventListeners();
+
 
     return true;
 }
 
+void GameScene::initEventListeners() {
+    //One by one is a single touch event...
+    auto touchOneListener = EventListenerTouchOneByOne::create();
+    touchOneListener->setSwallowTouches(true);
+
+    touchOneListener->onTouchBegan = [](Touch * touch, Event * event) {
+        CCLOG("Inside onTouchBegan");
+        //Start moving stuff on boat!
+        return true;
+    };
+
+    //Register with dispatcher.
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(touchOneListener, this);
+}
 
 void GameScene::menuCloseCallback(Ref* pSender)
 {
@@ -320,4 +359,49 @@ void GameScene::menuCloseCallback(Ref* pSender)
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     exit(0);
 #endif
+}
+
+
+void BoyancyContactListener::BeginContact(b2Contact* contact)
+{
+    b2Fixture* fixtureA = contact->GetFixtureA();
+    b2Fixture* fixtureB = contact->GetFixtureB();
+
+    void* userDataA = fixtureA->GetBody()->GetUserData();
+    void* userDataB = fixtureB->GetBody()->GetUserData();
+
+    if ( userDataA !=  NULL && ((bodyUserData*) userDataA)->name == "water"  && 
+        userDataB !=  NULL && ((bodyUserData*) userDataB)->name == "ship")
+    {
+        CCLOG("Contact Begin between ship and water. contact A is water");
+        m_layer->m_boyancyFixturePairs.insert( std::make_pair(fixtureA, fixtureB) );
+    }
+    else if ( userDataB !=  NULL && ((bodyUserData*) userDataB)->name == "water"  && 
+        userDataA !=  NULL && ((bodyUserData*) userDataA)->name == "ship")
+    {
+        CCLOG("Contact Begin between ship and water. contact B is water");
+        m_layer->m_boyancyFixturePairs.insert( std::make_pair(fixtureB, fixtureA) );
+    }
+}
+
+void BoyancyContactListener::EndContact(b2Contact* contact)
+{
+    b2Fixture* fixtureA = contact->GetFixtureA();
+    b2Fixture* fixtureB = contact->GetFixtureB();
+
+    void* userDataA = fixtureA->GetBody()->GetUserData();
+    void* userDataB = fixtureB->GetBody()->GetUserData();
+
+    if ( userDataA !=  NULL && ((bodyUserData*) userDataA)->name == "water"  && 
+        userDataB !=  NULL && ((bodyUserData*) userDataB)->name == "ship")
+    {
+        CCLOG("Contact Ending between ship and water. contact A is water");
+        m_layer->m_boyancyFixturePairs.erase( std::make_pair(fixtureA, fixtureB) );
+    }
+    else if ( userDataB !=  NULL && ((bodyUserData*) userDataB)->name == "water"  && 
+        userDataA !=  NULL && ((bodyUserData*) userDataA)->name == "ship")
+    {
+        CCLOG("Contact Ending between ship and water. contact B is water");
+        m_layer->m_boyancyFixturePairs.erase( std::make_pair(fixtureB, fixtureA) );
+    }
 }

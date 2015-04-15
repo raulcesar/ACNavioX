@@ -14,7 +14,13 @@
 #include "cocos2d.h"
 #include "Box2D/Box2D.h"
 
-// class b2dJson;
+typedef std::pair<b2Fixture*, b2Fixture*> fixturePair;
+
+class b2dJson;
+
+struct bodyUserData {
+      std::string name;
+};
 
 class GameScene : public cocos2d::Layer
 {
@@ -31,9 +37,15 @@ public:
     
     // implement the "static create()" method manually
     CREATE_FUNC(GameScene);
+    std::set<fixturePair> m_boyancyFixturePairs;
+    virtual void afterLoadProcessing(b2dJson* json);            // override this in a subclass to do something else after loading the world (before discarding the JSON info)
+
+    // virtual void BeginContact(b2Contact* contact);      // called by Box2D during the Step function when two fixtures begin touching
+    // virtual void EndContact(b2Contact* contact);        // called by Box2D during the Step function when two fixtures finish touching
 
 private:
 	void initBox2dWorld();
+    void initEventListeners();
     void debugDrawPhysics(b2World *_world);
     void tick(float dt);
 	b2World *_world;
@@ -43,6 +55,17 @@ private:
     virtual cocos2d::Vec2 initialWorldOffset();              // override this in subclasses to set the inital view position
     virtual float initialWorldScale();                          // override this in subclasses to set the initial view scale
 
+
+};
+
+
+class BoyancyContactListener : public b2ContactListener
+{
+public:
+    virtual void BeginContact(b2Contact* contact);      // called by Box2D during the Step function when two fixtures begin touching
+    virtual void EndContact(b2Contact* contact);        // called by Box2D during the Step function when two fixtures finish touching
+    
+    class GameScene* m_layer;
 };
 
 

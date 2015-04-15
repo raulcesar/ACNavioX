@@ -8,7 +8,7 @@ AppDelegate::AppDelegate() {
 
 }
 
-AppDelegate::~AppDelegate() 
+AppDelegate::~AppDelegate()
 {
 }
 
@@ -28,23 +28,24 @@ bool AppDelegate::applicationDidFinishLaunching() {
     // initialize director
     auto director = Director::getInstance();
     auto glview = director->getOpenGLView();
-    if(!glview) {
+    if (!glview) {
         //Para linux...
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
         glview = GLViewImpl::createWithRect("Toca Navio", Rect(0, 0, 1200, 900), 1);
-        // glview = GLViewImpl::createWithFullScreen("Toca Navio");
-        
-        // glview = GLViewImpl::create("Toca Navio");
+#else
+        glview = GLViewImpl::create("Toca Navio");
+#endif
         director->setOpenGLView(glview);
     }
 
 
     director->setContentScaleFactor(2);
-    
+
     auto fileUtils = CCFileUtils::getInstance();
     auto screenSize = glview->getFrameSize();
-    
+
     std::vector<std::string> resDirOrders;
-    
+
     //Check resolution
     if (screenSize.width > 2024) {
         //retina ipad
@@ -52,17 +53,17 @@ bool AppDelegate::applicationDidFinishLaunching() {
         resDirOrders.push_back("Resources");
         glview->setDesignResolutionSize(2048, 1536, ResolutionPolicy::NO_BORDER);
     }
-    
+
     fileUtils->setSearchPaths(resDirOrders);
-    
-    
-   
-    
-    
 
-    
 
-    
+
+
+
+
+
+
+
     // turn on display FPS
     director->setDisplayStats(true);
 
