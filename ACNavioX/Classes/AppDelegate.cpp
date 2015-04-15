@@ -29,7 +29,11 @@ bool AppDelegate::applicationDidFinishLaunching() {
     auto director = Director::getInstance();
     auto glview = director->getOpenGLView();
     if(!glview) {
-        glview = GLViewImpl::create("Toca Navio");
+        //Para linux...
+        glview = GLViewImpl::createWithRect("Toca Navio", Rect(0, 0, 1200, 900), 1);
+        // glview = GLViewImpl::createWithFullScreen("Toca Navio");
+        
+        // glview = GLViewImpl::create("Toca Navio");
         director->setOpenGLView(glview);
     }
 

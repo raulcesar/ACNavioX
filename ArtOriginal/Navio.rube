@@ -120,13 +120,13 @@
         ],
         "id" : 1,
         "linearVelocity" : 0,
-        "massData-I" : 23.96164512634277,
+        "massData-I" : 23.96164321899414,
         "massData-center" : 
         {
           "x" : 0.3661766350269318,
-          "y" : -0.2514589726924896
+          "y" : -0.2514589428901672
         },
-        "massData-mass" : 9.731511116027832,
+        "massData-mass" : 9.731510162353516,
         "name" : "shipHull",
         "position" : 
         {
