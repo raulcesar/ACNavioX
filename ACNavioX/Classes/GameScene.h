@@ -20,6 +20,8 @@ class b2dJson;
 
 struct bodyUserData {
       std::string name;
+      std::string material;
+
 };
 
 class GameScene : public cocos2d::Layer
@@ -50,6 +52,8 @@ private:
     void tick(float dt);
 	b2World *_world;
     b2Body * _body;
+    b2Body * _wave;
+
     cocos2d::Sprite * _ball;
     cocos2d::DrawNode * _drawNode;
     virtual cocos2d::Vec2 initialWorldOffset();              // override this in subclasses to set the inital view position

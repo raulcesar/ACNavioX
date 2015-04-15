@@ -65,7 +65,7 @@
     [
       
       {
-        "angle" : 0,
+        "angle" : 0.07462751865386963,
         "angularVelocity" : 0,
         "awake" : true,
         "fixture" : 
@@ -116,22 +116,53 @@
                 0.6040369868278503
               ]
             }
+          },
+          
+          {
+            "density" : 3,
+            "friction" : 0.2,
+            "id" : 8,
+            "name" : "fixture0",
+            "shapes" : 
+            [
+              
+              {
+                "type" : "polygon"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : 
+              [
+                -2.264570713043213,
+                -1.264570832252502,
+                -1.264570832252502,
+                -2.264570713043213
+              ],
+              "y" : 
+              [
+                -0.7456960678100586,
+                -0.7456960678100586,
+                0.2543039321899414,
+                0.2543039321899414
+              ]
+            }
           }
         ],
         "id" : 1,
         "linearVelocity" : 0,
-        "massData-I" : 23.97467613220215,
+        "massData-I" : 33.99690246582031,
         "massData-center" : 
         {
-          "x" : -0.3662518858909607,
-          "y" : -0.2514588236808777
+          "x" : -0.6956943273544312,
+          "y" : -0.2501011192798615
         },
-        "massData-mass" : 9.733500480651855,
+        "massData-mass" : 12.73349952697754,
         "name" : "shipHull",
         "position" : 
         {
-          "x" : 0.1038541793823242,
-          "y" : 6.402290344238281
+          "x" : -1.029551506042480,
+          "y" : 4.058958053588867
         },
         "type" : "dynamic"
       },
@@ -180,6 +211,92 @@
         "name" : "water",
         "position" : 0,
         "type" : "static"
+      },
+      
+      {
+        "angle" : 0,
+        "angularVelocity" : 0,
+        "awake" : true,
+        "fixture" : 
+        [
+          
+          {
+            "density" : 2,
+            "friction" : 0.2,
+            "id" : 9,
+            "name" : "wavefix",
+            "sensor" : true,
+            "shapes" : 
+            [
+              
+              {
+                "type" : "polygon"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : 
+              [
+                -0.8962936401367188,
+                0.8962917327880859,
+                0.8962917327880859,
+                -0.8962936401367188
+              ],
+              "y" : 
+              [
+                -0.8962926864624023,
+                -0.8962926864624023,
+                0.8962922096252441,
+                0.8962922096252441
+              ]
+            }
+          }
+        ],
+        "id" : 6,
+        "linearVelocity" : 0,
+        "name" : "wave",
+        "position" : 
+        {
+          "x" : 13.46669960021973,
+          "y" : 2.637969970703125
+        },
+        "type" : "kinematic"
+      },
+      
+      {
+        "angle" : 0,
+        "angularVelocity" : 0,
+        "awake" : true,
+        "id" : 7,
+        "linearVelocity" : 0,
+        "name" : "anchor",
+        "position" : 
+        {
+          "x" : 4.383293151855469,
+          "y" : 8.616516113281250
+        },
+        "type" : "static"
+      }
+    ],
+    "metajoint" : 
+    [
+      
+      {
+        "anchorA" : 0,
+        "anchorB" : 
+        {
+          "x" : -0.7431560158729553,
+          "y" : 2.120650053024292
+        },
+        "bodyA" : 7,
+        "bodyB" : 1,
+        "collideConnected" : false,
+        "dampingRatio" : 0,
+        "frequency" : 0,
+        "id" : 7,
+        "length" : 6.605120182037354,
+        "name" : "joint0",
+        "type" : "distance"
       }
     ],
     "positionIterations" : 3,

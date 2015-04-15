@@ -134,6 +134,7 @@ set(GAME_HEADERS
   Classes/AppDelegate.h
   Classes/GameScene.h
   Classes/Box2DDebugDraw.h
+  Classes/iforce2d_Buoyancy_functions.h
   ${PLATFORM_SPECIFIC_HEADERS}
 )
 

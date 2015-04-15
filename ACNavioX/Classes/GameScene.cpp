@@ -9,8 +9,8 @@
 
 #include "GameScene.h"
 #include "rubestuff/b2dJson.h"
-
 #include "Box2DDebugDraw.h"
+#include "iforce2d_Buoyancy_functions.h"
 USING_NS_CC;
 
 
@@ -114,18 +114,28 @@ void GameScene::afterLoadProcessing(b2dJson* json)
     //For now, I will put a string into the userData. Later this needs to be cleaned up.
     bodyUserData* shipData = new bodyUserData;
     shipData->name = "ship";
-
+    shipData->material = "metal";
 
     bodyUserData* waterData = new bodyUserData;
     waterData->name = "water";
+    waterData->material = "water";
+
+    bodyUserData* waveData = new bodyUserData;
+    waveData->name = "wave";
+    waveData->material = "water";
+
+
 
     b2Body* ship = json->getBodyByName("shipHull");
     ship->SetUserData(shipData);
     b2Body* water = json->getBodyByName("water");
     water->SetUserData(waterData);
 
+    _wave = json->getBodyByName("wave");
+    _wave->SetUserData(waveData);
+
     CCLOG("INSIDE afterLoadProcessing");
-    
+
 }
 
 
@@ -166,6 +176,93 @@ void GameScene::tick(float dt) {
 
 
     _world->Step(dt, velocityIterations, positionIterations);
+
+
+    //Loop all fixture pairs that were put into the boyancy pair set.
+    std::set<fixturePair>::iterator it = m_boyancyFixturePairs.begin();
+    std::set<fixturePair>::iterator end = m_boyancyFixturePairs.end();
+    while (it != end) {
+
+        //fixtureA is the fluid
+        b2Fixture* fixtureWater = it->first;
+        b2Fixture* fixtureBody = it->second;
+
+        float density = fixtureWater->GetDensity();
+
+        std::vector<b2Vec2> intersectionPoints;
+
+        //Find all intersection points and then the centroid of that polygon!
+        if ( findIntersectionOfFixtures(fixtureWater, fixtureBody, intersectionPoints) ) {
+
+            //find centroid
+            float area = 0;
+            //Note the area gets passed by reference.
+            b2Vec2 centroid = ComputeCentroid( intersectionPoints, area);
+
+            //apply buoyancy stuff here...
+            b2Vec2 gravity = _world->GetGravity();
+
+            //apply buoyancy force (fixtureWater is the fluid)
+            float displacedMass = fixtureWater->GetDensity() * area;
+            b2Vec2 buoyancyForce = displacedMass * -gravity;
+            fixtureBody->GetBody()->ApplyForce( buoyancyForce, centroid, true );
+
+            //apply drag separately for each polygon edge
+            for (uint i = 0; i < intersectionPoints.size(); i++) {
+                //the end points and mid-point of this edge
+                b2Vec2 v0 = intersectionPoints[i];
+                b2Vec2 v1 = intersectionPoints[(i + 1) % intersectionPoints.size()];
+                b2Vec2 midPoint = 0.5f * (v0 + v1);
+
+                //find relative velocity between object and fluid at edge midpoint
+                b2Vec2 velDir = fixtureBody->GetBody()->GetLinearVelocityFromWorldPoint( midPoint ) -
+                                fixtureWater->GetBody()->GetLinearVelocityFromWorldPoint( midPoint );
+                float vel = velDir.Normalize();
+
+                b2Vec2 edge = v1 - v0;
+                float edgeLength = edge.Normalize();
+                b2Vec2 normal = b2Cross(-1, edge); //gets perpendicular vector
+
+                float dragDot = b2Dot(normal, velDir);
+                if ( dragDot < 0 ) {
+                    continue; //normal points backwards - this is not a leading edge
+                }
+
+                float dragMag = dragDot * edgeLength * density * vel * vel;
+                b2Vec2 dragForce = dragMag * -velDir;
+                fixtureBody->GetBody()->ApplyForce( dragForce, midPoint, true );
+
+                //apply lift
+                float liftDot = b2Dot(edge, velDir);
+                float liftMag =  (dragDot * liftDot) * edgeLength * density * vel * vel;
+                b2Vec2 liftDir = b2Cross(1, velDir); //gets perpendicular vector
+                b2Vec2 liftForce = liftMag * liftDir;
+                fixtureBody->GetBody()->ApplyForce( liftForce, midPoint, true );
+
+
+            }
+
+
+            // //Apply drag.
+            // //find relative velocity between object and fluid
+            // b2Vec2 velDir = fixtureBody->GetBody()->GetLinearVelocityFromWorldPoint( centroid ) -
+            //                 fixtureWater->GetBody()->GetLinearVelocityFromWorldPoint( centroid );
+            // float vel = velDir.Normalize();
+
+            // //apply simple linear drag
+            // float dragMag = fixtureWater->GetDensity() * vel * vel;
+            // b2Vec2 dragForce = dragMag * -velDir;
+            // fixtureBody->GetBody()->ApplyForce( dragForce, centroid, true );
+
+            //apply simple angular drag
+            float angularDrag = area * -fixtureBody->GetBody()->GetAngularVelocity();
+            fixtureBody->GetBody()->ApplyTorque( angularDrag, true );
+
+        }
+
+
+        ++it;
+    }
 
     // for (b2Body *b = _world->GetBodyList(); b; b = b->GetNext()) {
 
@@ -337,9 +434,32 @@ void GameScene::initEventListeners() {
     auto touchOneListener = EventListenerTouchOneByOne::create();
     touchOneListener->setSwallowTouches(true);
 
-    touchOneListener->onTouchBegan = [](Touch * touch, Event * event) {
-        CCLOG("Inside onTouchBegan");
+    touchOneListener->onTouchBegan = [this](Touch * touch, Event * event) {
+        CCLOG("Inside onTouchBegan... going to apply velocigy to wave!");
         //Start moving stuff on boat!
+        //Apply velocity to wave
+        _wave->SetLinearVelocity(b2Vec2(-10.0, 0.0));
+        // for (b2Body *b = _world->GetBodyList(); b; b = b->GetNext()) {
+
+
+
+        //     b2Vec2 position = b->GetPosition();
+        //     float32 angle = b->GetAngle();
+
+
+        //     CCLOG("%4.2f %4.2f %4.2f\n", position.x, position.y, angle);
+        //     // printf("%4.2f %4.2f %4.2f\n", position.x, position.y, angle);
+        //     if (b->GetUserData() != NULL) {
+        //         Sprite *ballSprite = (Sprite*) b->GetUserData();
+        //         auto spritePosition = Point((position.x * PTM_RATIO), (position.y * PTM_RATIO));
+
+        //         ballSprite->setPosition(spritePosition);
+        //         ballSprite->setRotation(-1 * CC_RADIANS_TO_DEGREES(b->GetAngle()));
+        //         // ballSprite.setrot
+        //         // ballData.rotation = -1 * CC_RADIANS_TO_DEGREES(b->GetAngle());
+        //     }
+        // }
+
         return true;
     };
 
@@ -370,14 +490,14 @@ void BoyancyContactListener::BeginContact(b2Contact* contact)
     void* userDataA = fixtureA->GetBody()->GetUserData();
     void* userDataB = fixtureB->GetBody()->GetUserData();
 
-    if ( userDataA !=  NULL && ((bodyUserData*) userDataA)->name == "water"  && 
-        userDataB !=  NULL && ((bodyUserData*) userDataB)->name == "ship")
+    if ( userDataA !=  NULL && ((bodyUserData*) userDataA)->material == "water"  &&
+            userDataB !=  NULL && ((bodyUserData*) userDataB)->name == "ship")
     {
         CCLOG("Contact Begin between ship and water. contact A is water");
         m_layer->m_boyancyFixturePairs.insert( std::make_pair(fixtureA, fixtureB) );
     }
-    else if ( userDataB !=  NULL && ((bodyUserData*) userDataB)->name == "water"  && 
-        userDataA !=  NULL && ((bodyUserData*) userDataA)->name == "ship")
+    else if ( userDataB !=  NULL && ((bodyUserData*) userDataB)->material == "water"  &&
+              userDataA !=  NULL && ((bodyUserData*) userDataA)->name == "ship")
     {
         CCLOG("Contact Begin between ship and water. contact B is water");
         m_layer->m_boyancyFixturePairs.insert( std::make_pair(fixtureB, fixtureA) );
@@ -392,14 +512,14 @@ void BoyancyContactListener::EndContact(b2Contact* contact)
     void* userDataA = fixtureA->GetBody()->GetUserData();
     void* userDataB = fixtureB->GetBody()->GetUserData();
 
-    if ( userDataA !=  NULL && ((bodyUserData*) userDataA)->name == "water"  && 
-        userDataB !=  NULL && ((bodyUserData*) userDataB)->name == "ship")
+    if ( userDataA !=  NULL && ((bodyUserData*) userDataA)->material == "water"  &&
+            userDataB !=  NULL && ((bodyUserData*) userDataB)->name == "ship")
     {
         CCLOG("Contact Ending between ship and water. contact A is water");
         m_layer->m_boyancyFixturePairs.erase( std::make_pair(fixtureA, fixtureB) );
     }
-    else if ( userDataB !=  NULL && ((bodyUserData*) userDataB)->name == "water"  && 
-        userDataA !=  NULL && ((bodyUserData*) userDataA)->name == "ship")
+    else if ( userDataB !=  NULL && ((bodyUserData*) userDataB)->material == "water"  &&
+              userDataA !=  NULL && ((bodyUserData*) userDataA)->name == "ship")
     {
         CCLOG("Contact Ending between ship and water. contact B is water");
         m_layer->m_boyancyFixturePairs.erase( std::make_pair(fixtureB, fixtureA) );

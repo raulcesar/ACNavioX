@@ -87,30 +87,33 @@ bool findIntersectionOfFixtures(b2Fixture* fA, b2Fixture* fB, std::vector<b2Vec2
 {
     //currently this only handles polygon vs polygon
     if ( fA->GetShape()->GetType() != b2Shape::e_polygon ||
-         fB->GetShape()->GetType() != b2Shape::e_polygon )
-        return false;
+         fB->GetShape()->GetType() != b2Shape::e_polygon ){
+                 return false;
+         }
 
     b2PolygonShape* polyA = (b2PolygonShape*)fA->GetShape();
     b2PolygonShape* polyB = (b2PolygonShape*)fB->GetShape();
 
     //fill 'subject polygon' from fixtureA polygon
-    for (int i = 0; i < polyA->GetVertexCount(); i++)
+    for (int32 i = 0; i < polyA->GetVertexCount(); i++){
         outputVertices.push_back( fA->GetBody()->GetWorldPoint( polyA->GetVertex(i) ) );
+    }
 
     //fill 'clip polygon' from fixtureB polygon
     std::vector<b2Vec2> clipPolygon;
-    for (int i = 0; i < polyB->GetVertexCount(); i++)
+    for (int32 i = 0; i < polyB->GetVertexCount(); i++){
         clipPolygon.push_back( fB->GetBody()->GetWorldPoint( polyB->GetVertex(i) ) );
+    }
 
     b2Vec2 cp1 = clipPolygon[clipPolygon.size()-1];
-    for (int j = 0; j < clipPolygon.size(); j++) {
+    for (uint j = 0; j < clipPolygon.size(); j++) {
         b2Vec2 cp2 = clipPolygon[j];
         if ( outputVertices.empty() )
             return false;
         std::vector<b2Vec2> inputList = outputVertices;
         outputVertices.clear();
         b2Vec2 s = inputList[inputList.size() - 1]; //last on the input list
-        for (int i = 0; i < inputList.size(); i++) {
+        for (uint i = 0; i < inputList.size(); i++) {
             b2Vec2 e = inputList[i];
             if (inside(cp1, cp2, e)) {
                 if (!inside(cp1, cp2, s)) {
