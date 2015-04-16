@@ -13,8 +13,8 @@
 			"name" : "anchor",
 			"position" : 
 			{
-				"x" : 4.257757186889648,
-				"y" : 3.804264545440674
+				"x" : 4.383293151855469,
+				"y" : 8.616516113281250
 			},
 			"type" : 0
 		},
@@ -57,8 +57,8 @@
 			"name" : "wave",
 			"position" : 
 			{
-				"x" : 13.46667671203613,
-				"y" : 2.637966632843018
+				"x" : 13.46669960021973,
+				"y" : 2.637969970703125
 			},
 			"type" : 1
 		},
@@ -111,9 +111,9 @@
 			[
 				
 				{
-					"density" : 3,
+					"density" : 2,
 					"friction" : 0.2,
-					"name" : "fixture0",
+					"name" : "balistfixture",
 					"polygon" : 
 					{
 						"vertices" : 
@@ -139,7 +139,7 @@
 				{
 					"density" : 1,
 					"friction" : 0.2,
-					"name" : "hullpointingright",
+					"name" : "hullfixture",
 					"polygon" : 
 					{
 						"vertices" : 
@@ -171,7 +171,7 @@
 				{
 					"density" : 1,
 					"friction" : 0.2,
-					"name" : "hullpointingright",
+					"name" : "hullfixture",
 					"polygon" : 
 					{
 						"vertices" : 
@@ -201,18 +201,18 @@
 				}
 			],
 			"linearVelocity" : 0,
-			"massData-I" : 33.99690246582031,
+			"massData-I" : 30.65616035461426,
 			"massData-center" : 
 			{
-				"x" : -0.6956943273544312,
-				"y" : -0.2501011192798615
+				"x" : -0.6045982837677002,
+				"y" : -0.2504765689373016
 			},
-			"massData-mass" : 12.73349952697754,
+			"massData-mass" : 11.73349952697754,
 			"name" : "shipHull",
 			"position" : 
 			{
-				"x" : -1.029551506042480,
-				"y" : 4.058958053588867
+				"x" : 0,
+				"y" : 4.05895996093750
 			},
 			"type" : 2
 		}
@@ -261,25 +261,6 @@
 		"x" : 0,
 		"y" : -10
 	},
-	"joint" : 
-	[
-		
-		{
-			"anchorA" : 0,
-			"anchorB" : 
-			{
-				"x" : -0.7431559562683105,
-				"y" : 2.120650053024292
-			},
-			"bodyA" : 0,
-			"bodyB" : 3,
-			"dampingRatio" : 0,
-			"frequency" : 0,
-			"length" : 6.605120182037354,
-			"name" : "joint0",
-			"type" : "distance"
-		}
-	],
 	"positionIterations" : 3,
 	"stepsPerSecond" : 60.0,
 	"subStepping" : false,

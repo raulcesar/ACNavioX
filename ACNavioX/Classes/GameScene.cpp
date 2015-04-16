@@ -109,6 +109,21 @@ void GameScene::initBox2dWorld() {
 }
 
 
+
+
+void GameScene::setFixtureUserData(b2dJson* json, bodyUserData* userData, std::string fixtureName) {
+    std::vector<b2Fixture*> fixtureList;
+
+    json->getFixturesByName(fixtureName.c_str(), fixtureList);
+    for (uint i = 0; i < fixtureList.size(); i++) {
+        b2Fixture* fixture = fixtureList[i];
+        fixture->SetUserData(userData);
+    }
+
+
+
+}
+
 void GameScene::afterLoadProcessing(b2dJson* json)
 {
     //For now, I will put a string into the userData. Later this needs to be cleaned up.
@@ -124,12 +139,38 @@ void GameScene::afterLoadProcessing(b2dJson* json)
     waveData->name = "wave";
     waveData->material = "water";
 
+    bodyUserData* hullData = new bodyUserData;
+    hullData->name = "hull";
+    hullData->material = "metal";
+
+    bodyUserData* balistData = new bodyUserData;
+    balistData->name = "balist";
+    balistData->material = "metal";
 
 
-    b2Body* ship = json->getBodyByName("shipHull");
-    ship->SetUserData(shipData);
-    b2Body* water = json->getBodyByName("water");
-    water->SetUserData(waterData);
+
+    //waterfix
+    //wavefix
+    //balistfixture
+    //hullfixture
+    setFixtureUserData(json, waterData, "waterfix");
+    setFixtureUserData(json, waveData, "wavefix");
+    setFixtureUserData(json, balistData, "balistfixture");
+    setFixtureUserData(json, hullData, "hullfixture");
+
+
+
+
+
+    _ship = json->getBodyByName("shipHull");
+    // b2Body* ship = json->getBodyByName("shipHull");
+    // ship->SetUserData(shipData);
+    //Set userdata on fixtures of ship.
+
+
+
+    // b2Body* water = json->getBodyByName("water");
+    // water->SetUserData(waterData);
 
     _wave = json->getBodyByName("wave");
     _wave->SetUserData(waveData);
@@ -176,11 +217,23 @@ void GameScene::tick(float dt) {
 
 
     _world->Step(dt, velocityIterations, positionIterations);
+    
+
+    if (this->applyForceToShip) {
+        _ship->ApplyForceToCenter(b2Vec2(10.0, 0), true);
+    }
+
+    if (!this->waveOnShip && this->applyForceToShip && _ship->GetPosition().x > 2.0) {
+        this->applyForceToShip = false;
+    }
+    
 
 
     //Loop all fixture pairs that were put into the boyancy pair set.
     std::set<fixturePair>::iterator it = m_boyancyFixturePairs.begin();
     std::set<fixturePair>::iterator end = m_boyancyFixturePairs.end();
+
+
     while (it != end) {
 
         //fixtureA is the fluid
@@ -228,6 +281,7 @@ void GameScene::tick(float dt) {
                     continue; //normal points backwards - this is not a leading edge
                 }
 
+                // CCLOG("intersectionPoints: %u", intersectionPoints.size());
                 float dragMag = dragDot * edgeLength * density * vel * vel;
                 b2Vec2 dragForce = dragMag * -velDir;
                 fixtureBody->GetBody()->ApplyForce( dragForce, midPoint, true );
@@ -487,21 +541,49 @@ void BoyancyContactListener::BeginContact(b2Contact* contact)
     b2Fixture* fixtureA = contact->GetFixtureA();
     b2Fixture* fixtureB = contact->GetFixtureB();
 
-    void* userDataA = fixtureA->GetBody()->GetUserData();
-    void* userDataB = fixtureB->GetBody()->GetUserData();
+    void* userDataA = fixtureA->GetUserData();
+    void* userDataB = fixtureB->GetUserData();
+    b2Body* hullBody;
 
+
+
+    bool isWave = false;
+
+    //TODO: perhaps treat wave differently, but for now, its the same as normal water.
     if ( userDataA !=  NULL && ((bodyUserData*) userDataA)->material == "water"  &&
-            userDataB !=  NULL && ((bodyUserData*) userDataB)->name == "ship")
+            userDataB !=  NULL && ((bodyUserData*) userDataB)->name == "hull")
     {
+
         CCLOG("Contact Begin between ship and water. contact A is water");
+        hullBody = fixtureA->GetBody();
         m_layer->m_boyancyFixturePairs.insert( std::make_pair(fixtureA, fixtureB) );
+        if (((bodyUserData*) userDataA)->name == "wave") {
+            isWave = true;
+        }
+
     }
     else if ( userDataB !=  NULL && ((bodyUserData*) userDataB)->material == "water"  &&
-              userDataA !=  NULL && ((bodyUserData*) userDataA)->name == "ship")
+              userDataA !=  NULL && ((bodyUserData*) userDataA)->name == "hull")
     {
         CCLOG("Contact Begin between ship and water. contact B is water");
+        hullBody = fixtureB->GetBody();
         m_layer->m_boyancyFixturePairs.insert( std::make_pair(fixtureB, fixtureA) );
+        if (((bodyUserData*) userDataB)->name == "wave") {
+            isWave = true;
+        }
+
     }
+
+    //Apply force to ship
+    if (isWave) {
+        CCLOG("Apply force to ship");
+        m_layer->waveOnShip = true;
+        m_layer->applyForceToShip = true;
+    }
+
+
+
+    CCLOG("We have %u boyancy pairs.", m_layer->m_boyancyFixturePairs.size());
 }
 
 void BoyancyContactListener::EndContact(b2Contact* contact)
@@ -509,19 +591,37 @@ void BoyancyContactListener::EndContact(b2Contact* contact)
     b2Fixture* fixtureA = contact->GetFixtureA();
     b2Fixture* fixtureB = contact->GetFixtureB();
 
-    void* userDataA = fixtureA->GetBody()->GetUserData();
-    void* userDataB = fixtureB->GetBody()->GetUserData();
+    void* userDataA = fixtureA->GetUserData();
+    void* userDataB = fixtureB->GetUserData();
+
+    bool isWave = false;
 
     if ( userDataA !=  NULL && ((bodyUserData*) userDataA)->material == "water"  &&
-            userDataB !=  NULL && ((bodyUserData*) userDataB)->name == "ship")
+            userDataB !=  NULL && ((bodyUserData*) userDataB)->name == "hull")
     {
         CCLOG("Contact Ending between ship and water. contact A is water");
         m_layer->m_boyancyFixturePairs.erase( std::make_pair(fixtureA, fixtureB) );
+        if (((bodyUserData*) userDataA)->name == "wave") {
+            isWave = true;
+        }
+
     }
     else if ( userDataB !=  NULL && ((bodyUserData*) userDataB)->material == "water"  &&
-              userDataA !=  NULL && ((bodyUserData*) userDataA)->name == "ship")
+              userDataA !=  NULL && ((bodyUserData*) userDataA)->name == "hull")
     {
         CCLOG("Contact Ending between ship and water. contact B is water");
         m_layer->m_boyancyFixturePairs.erase( std::make_pair(fixtureB, fixtureA) );
+        if (((bodyUserData*) userDataB)->name == "wave") {
+            isWave = true;
+        }
+
     }
+    CCLOG("We have %u boyancy pairs.", m_layer->m_boyancyFixturePairs.size());
+
+    if (isWave) {
+        CCLOG("Stop Apply force to ship");
+        m_layer->waveOnShip = false;
+    }
+
+
 }

@@ -75,7 +75,7 @@
             "density" : 1,
             "friction" : 0.2,
             "id" : 5,
-            "name" : "hullpointingright",
+            "name" : "hullfixture",
             "shapes" : 
             [
               
@@ -119,10 +119,10 @@
           },
           
           {
-            "density" : 3,
+            "density" : 2,
             "friction" : 0.2,
             "id" : 8,
-            "name" : "fixture0",
+            "name" : "balistfixture",
             "shapes" : 
             [
               
@@ -151,18 +151,18 @@
         ],
         "id" : 1,
         "linearVelocity" : 0,
-        "massData-I" : 33.99690246582031,
+        "massData-I" : 30.65616035461426,
         "massData-center" : 
         {
-          "x" : -0.6956943273544312,
-          "y" : -0.2501011192798615
+          "x" : -0.6045982837677002,
+          "y" : -0.2504765689373016
         },
-        "massData-mass" : 12.73349952697754,
+        "massData-mass" : 11.73349952697754,
         "name" : "shipHull",
         "position" : 
         {
-          "x" : -1.029551506042480,
-          "y" : 4.058958053588867
+          "x" : 0,
+          "y" : 4.05895996093750
         },
         "type" : "dynamic"
       },
@@ -276,27 +276,6 @@
           "y" : 8.616516113281250
         },
         "type" : "static"
-      }
-    ],
-    "metajoint" : 
-    [
-      
-      {
-        "anchorA" : 0,
-        "anchorB" : 
-        {
-          "x" : -0.7431560158729553,
-          "y" : 2.120650053024292
-        },
-        "bodyA" : 7,
-        "bodyB" : 1,
-        "collideConnected" : false,
-        "dampingRatio" : 0,
-        "frequency" : 0,
-        "id" : 7,
-        "length" : 6.605120182037354,
-        "name" : "joint0",
-        "type" : "distance"
       }
     ],
     "positionIterations" : 3,

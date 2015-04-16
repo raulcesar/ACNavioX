@@ -29,6 +29,8 @@ class GameScene : public cocos2d::Layer
 public:
     // there's no 'id' in cpp, so we recommend returning the class instance pointer
     static cocos2d::Scene* createScene();
+    bool waveOnShip = false;
+    bool applyForceToShip = false;
     
     // Here's a difference. Method 'init' in cocos2d-x returns bool, instead of returning 'id' in cocos2d-iphone
     virtual bool init();
@@ -46,6 +48,7 @@ public:
     // virtual void EndContact(b2Contact* contact);        // called by Box2D during the Step function when two fixtures finish touching
 
 private:
+    void setFixtureUserData(b2dJson* json, bodyUserData*, std::string fixtureName);
 	void initBox2dWorld();
     void initEventListeners();
     void debugDrawPhysics(b2World *_world);
@@ -53,6 +56,8 @@ private:
 	b2World *_world;
     b2Body * _body;
     b2Body * _wave;
+    b2Body * _ship;
+
 
     cocos2d::Sprite * _ball;
     cocos2d::DrawNode * _drawNode;
