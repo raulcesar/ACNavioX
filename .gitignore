@@ -1,6 +1,9 @@
 #sublime
 ACNavioX.sublime-workspace
 
+#CMAKE
+**/CMakeFiles/
+
 #RUBE
 *.rube-backups/
 

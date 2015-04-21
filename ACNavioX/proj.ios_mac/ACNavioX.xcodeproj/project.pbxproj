@@ -60,14 +60,13 @@
 		BF171245129291EC00B8313A /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB012928DE900B8313A /* OpenGLES.framework */; };
 		BF1712471292920000B8313A /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB412928DE900B8313A /* libz.dylib */; };
 		BF1C47F01293687400B63C5D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF1C47EA1293683800B63C5D /* QuartzCore.framework */; };
+		C4007FA01AE6B82000C58833 /* Box2DDebugDraw.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C4007F9D1AE6B82000C58833 /* Box2DDebugDraw.cpp */; };
 		C47976CF1AAE451700D6490F /* sprites.plist in Resources */ = {isa = PBXBuildFile; fileRef = C47976CD1AAE451700D6490F /* sprites.plist */; };
 		C47976D01AAE451700D6490F /* sprites.pvr in Resources */ = {isa = PBXBuildFile; fileRef = C47976CE1AAE451700D6490F /* sprites.pvr */; };
 		C47976D31AAE543100D6490F /* Navio.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C47976D11AAE543100D6490F /* Navio.cpp */; };
 		C4B9AB061AADFCB9008FC2E2 /* GameScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C4B9AB041AADFCB9008FC2E2 /* GameScene.cpp */; };
 		C4B9AB0B1AADFED4008FC2E2 /* hd in Resources */ = {isa = PBXBuildFile; fileRef = C4B9AB071AADFED4008FC2E2 /* hd */; };
 		C4B9AB0D1AADFED4008FC2E2 /* sd in Resources */ = {isa = PBXBuildFile; fileRef = C4B9AB091AADFED4008FC2E2 /* sd */; };
-		C4F2B44F1ADC263B000C08CB /* BasicRUBELayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C4F2B4491ADC263B000C08CB /* BasicRUBELayer.cpp */; };
-		C4F2B4501ADC263B000C08CB /* Box2DDebugDraw.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C4F2B44B1ADC263B000C08CB /* Box2DDebugDraw.cpp */; };
 		C4F2B4561ADC3F98000C08CB /* Navio.json in Resources */ = {isa = PBXBuildFile; fileRef = C4F2B4541ADC3F98000C08CB /* Navio.json */; };
 		C4F2B4571ADC3F98000C08CB /* pinball.json in Resources */ = {isa = PBXBuildFile; fileRef = C4F2B4551ADC3F98000C08CB /* pinball.json */; };
 		C4F2B4731ADC4180000C08CB /* b2dJson.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C4F2B46B1ADC4180000C08CB /* b2dJson.cpp */; };
@@ -164,6 +163,9 @@
 		BF170DB012928DE900B8313A /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		BF170DB412928DE900B8313A /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		BF1C47EA1293683800B63C5D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		C4007F9D1AE6B82000C58833 /* Box2DDebugDraw.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Box2DDebugDraw.cpp; sourceTree = "<group>"; };
+		C4007F9E1AE6B82000C58833 /* Box2DDebugDraw.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Box2DDebugDraw.h; sourceTree = "<group>"; };
+		C4007F9F1AE6B82000C58833 /* iforce2d_Buoyancy_functions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iforce2d_Buoyancy_functions.h; sourceTree = "<group>"; };
 		C400D43C1AD73F940051A46F /* Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Prefix.pch; path = ios/Prefix.pch; sourceTree = SOURCE_ROOT; };
 		C47976CD1AAE451700D6490F /* sprites.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = sprites.plist; sourceTree = "<group>"; };
 		C47976CE1AAE451700D6490F /* sprites.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = sprites.pvr; sourceTree = "<group>"; };
@@ -174,11 +176,6 @@
 		C4B9AB071AADFED4008FC2E2 /* hd */ = {isa = PBXFileReference; lastKnownFileType = folder; path = hd; sourceTree = "<group>"; };
 		C4B9AB091AADFED4008FC2E2 /* sd */ = {isa = PBXFileReference; lastKnownFileType = folder; path = sd; sourceTree = "<group>"; };
 		C4CC8DC81AA7CDC700E1D2CA /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; name = .gitignore; path = ../../.gitignore; sourceTree = "<group>"; };
-		C4F2B4491ADC263B000C08CB /* BasicRUBELayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BasicRUBELayer.cpp; sourceTree = "<group>"; };
-		C4F2B44A1ADC263B000C08CB /* BasicRUBELayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BasicRUBELayer.h; sourceTree = "<group>"; };
-		C4F2B44B1ADC263B000C08CB /* Box2DDebugDraw.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Box2DDebugDraw.cpp; sourceTree = "<group>"; };
-		C4F2B44C1ADC263B000C08CB /* Box2DDebugDraw.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Box2DDebugDraw.h; sourceTree = "<group>"; };
-		C4F2B44D1ADC263B000C08CB /* QueryCallbacks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QueryCallbacks.h; sourceTree = "<group>"; };
 		C4F2B4541ADC3F98000C08CB /* Navio.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Navio.json; sourceTree = "<group>"; };
 		C4F2B4551ADC3F98000C08CB /* pinball.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = pinball.json; sourceTree = "<group>"; };
 		C4F2B46B1ADC4180000C08CB /* b2dJson.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = b2dJson.cpp; sourceTree = "<group>"; };
@@ -271,11 +268,6 @@
 			isa = PBXGroup;
 			children = (
 				C4F2B46A1ADC4180000C08CB /* rubestuff */,
-				C4F2B4491ADC263B000C08CB /* BasicRUBELayer.cpp */,
-				C4F2B44A1ADC263B000C08CB /* BasicRUBELayer.h */,
-				C4F2B44B1ADC263B000C08CB /* Box2DDebugDraw.cpp */,
-				C4F2B44C1ADC263B000C08CB /* Box2DDebugDraw.h */,
-				C4F2B44D1ADC263B000C08CB /* QueryCallbacks.h */,
 				C4CC8DC81AA7CDC700E1D2CA /* .gitignore */,
 				46880B8319C43A87006E1F66 /* Classes */,
 				46880B7519C43A67006E1F66 /* Resources */,
@@ -333,6 +325,9 @@
 		46880B8319C43A87006E1F66 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				C4007F9D1AE6B82000C58833 /* Box2DDebugDraw.cpp */,
+				C4007F9E1AE6B82000C58833 /* Box2DDebugDraw.h */,
+				C4007F9F1AE6B82000C58833 /* iforce2d_Buoyancy_functions.h */,
 				46880B8419C43A87006E1F66 /* AppDelegate.cpp */,
 				46880B8519C43A87006E1F66 /* AppDelegate.h */,
 				C4B9AB041AADFCB9008FC2E2 /* GameScene.cpp */,
@@ -567,15 +562,14 @@
 			files = (
 				C4F2B4751ADC4180000C08CB /* b2dJsonImage.cpp in Sources */,
 				46880B8819C43A87006E1F66 /* AppDelegate.cpp in Sources */,
-				C4F2B44F1ADC263B000C08CB /* BasicRUBELayer.cpp in Sources */,
 				503AE10017EB989F00D1A890 /* AppController.mm in Sources */,
 				503AE10217EB989F00D1A890 /* RootViewController.mm in Sources */,
 				C4F2B4731ADC4180000C08CB /* b2dJson.cpp in Sources */,
+				C4007FA01AE6B82000C58833 /* Box2DDebugDraw.cpp in Sources */,
 				C47976D31AAE543100D6490F /* Navio.cpp in Sources */,
 				C4F2B4771ADC4180000C08CB /* jsoncpp.cpp in Sources */,
 				C4B9AB061AADFCB9008FC2E2 /* GameScene.cpp in Sources */,
 				503AE10117EB989F00D1A890 /* main.m in Sources */,
-				C4F2B4501ADC263B000C08CB /* Box2DDebugDraw.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
