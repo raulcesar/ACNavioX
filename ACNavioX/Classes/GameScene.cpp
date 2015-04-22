@@ -148,6 +148,11 @@ void GameScene::afterLoadProcessing(b2dJson* json)
     balistData->material = "metal";
 
 
+    bodyUserData* navioBodyData = new bodyUserData;
+    navioBodyData->name = "navio";
+    navioBodyData->material = "metal";
+    navioBodyData->sprite = _navio;
+
 
     //waterfix
     //wavefix
@@ -163,6 +168,8 @@ void GameScene::afterLoadProcessing(b2dJson* json)
 
 
     _ship = json->getBodyByName("shipHull");
+    _ship->SetUserData(navioBodyData);
+
     // b2Body* ship = json->getBodyByName("shipHull");
     // ship->SetUserData(shipData);
     //Set userdata on fixtures of ship.
@@ -217,7 +224,7 @@ void GameScene::tick(float dt) {
 
 
     _world->Step(dt, velocityIterations, positionIterations);
-    
+
 
     if (this->applyForceToShip) {
         _ship->ApplyForceToCenter(b2Vec2(10.0, 0), true);
@@ -226,7 +233,7 @@ void GameScene::tick(float dt) {
     if (!this->waveOnShip && this->applyForceToShip && _ship->GetPosition().x > 2.0) {
         this->applyForceToShip = false;
     }
-    
+
 
 
     //Loop all fixture pairs that were put into the boyancy pair set.
@@ -318,28 +325,34 @@ void GameScene::tick(float dt) {
         ++it;
     }
 
-    // for (b2Body *b = _world->GetBodyList(); b; b = b->GetNext()) {
+    for (b2Body *b = _world->GetBodyList(); b; b = b->GetNext()) {
+
+        b2Vec2 position = b->GetPosition();
+        float32 angle = b->GetAngle();
 
 
+        // CCLOG("Position: (%4.2f, %4.2f). Angle: %4.2f\n", position.x, position.y, angle);
+        // printf("%4.2f %4.2f %4.2f\n", position.x, position.y, angle);
+        if (b->GetUserData() != NULL) {
 
-    //     b2Vec2 position = b->GetPosition();
-    //     float32 angle = b->GetAngle();
+            bodyUserData* userData = (bodyUserData*) b->GetUserData();
+            if (userData->sprite != NULL) {
+                Sprite *sprite = (Sprite*) userData->sprite;
+                auto spritePosition = Vec2((position.x * PTM_RATIO) + 100, (position.y * PTM_RATIO));
+                CCLOG("Achei o navio. Vou tentar setar a sua posicao. (%4.2f, %4.2f)", spritePosition.x, spritePosition.y);
+
+                sprite->setPosition(spritePosition);
+                CCLOG("consegui");
+
+                sprite->setRotation(-1 * CC_RADIANS_TO_DEGREES(angle));
 
 
-    //     CCLOG("%4.2f %4.2f %4.2f\n", position.x, position.y, angle);
-    //     // printf("%4.2f %4.2f %4.2f\n", position.x, position.y, angle);
-    //     if (b->GetUserData() != NULL) {
-    //         Sprite *ballSprite = (Sprite*) b->GetUserData();
-    //         auto spritePosition = Point((position.x * PTM_RATIO), (position.y * PTM_RATIO));
+            }
 
-    //         ballSprite->setPosition(spritePosition);
-    //         ballSprite->setRotation(-1 * CC_RADIANS_TO_DEGREES(b->GetAngle()));
-    //         // ballSprite.setrot
-    //         // ballData.rotation = -1 * CC_RADIANS_TO_DEGREES(b->GetAngle());
-    //     }
-    // }
 
-    // debugDraw();
+        }
+    }
+
 }
 
 void GameScene::draw(Renderer *renderer, const Mat4 &transform, uint32_t transformUpdated)
@@ -410,13 +423,15 @@ bool GameScene::init()
     skyLayer->setPosition(Vec2(0, 0));
 
 
-    //Cria navio a partir do spritesheet.
-//    auto navioTemp = Sprite::createWithSpriteFrameName("navior2l0.png");
-////    navioTemp->setScale(-1, 1);
-//    navioTemp->setPosition(Vec2(0, 0));
-//    navioTemp->setAnchorPoint(Vec2(0, 0));
-//    navioTemp->setFlippedX(true);
-//
+    // Cria navio a partir do spritesheet.
+    _navio = Sprite::createWithSpriteFrameName("navior2l0.png");
+    _navio->setName("navio");
+//    navioTemp->setScale(-1, 1);
+    CCLOG("nome do navio: %s", _navio->getName().c_str());
+    _navio->setPosition(Vec2(0, 0));
+    _navio->setAnchorPoint(Vec2(0, 0));
+    _navio->setFlippedX(true);
+
 //
 //
 //
@@ -425,6 +440,7 @@ bool GameScene::init()
     _drawNode = DrawNode::create();
     this->addChild(_drawNode);
     this->addChild(skyLayer);
+    this->addChild(_navio);
 
 
 //    this->addChild(navioTemp);

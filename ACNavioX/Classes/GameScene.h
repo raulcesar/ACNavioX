@@ -9,7 +9,7 @@
 #ifndef __ACNavioX__GameScene__
 #define __ACNavioX__GameScene__
 
-#define PTM_RATIO 32.0
+#define PTM_RATIO 50.0
 
 #include "cocos2d.h"
 #include "Box2D/Box2D.h"
@@ -21,6 +21,7 @@ class b2dJson;
 struct bodyUserData {
       std::string name;
       std::string material;
+      cocos2d::Sprite* sprite = NULL;
 
 };
 
@@ -60,6 +61,8 @@ private:
 
 
     cocos2d::Sprite * _ball;
+    cocos2d::Sprite * _navio;
+
     cocos2d::DrawNode * _drawNode;
     virtual cocos2d::Vec2 initialWorldOffset();              // override this in subclasses to set the inital view position
     virtual float initialWorldScale();                          // override this in subclasses to set the initial view scale
