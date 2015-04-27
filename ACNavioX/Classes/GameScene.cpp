@@ -139,6 +139,10 @@ void GameScene::afterLoadProcessing(b2dJson* json)
     waveData->name = "wave";
     waveData->material = "water";
 
+    // bodyUserData* waveData = new bodyUserData;
+    // waveData->name = "waveNO";
+    // waveData->material = "waterNO";
+
     bodyUserData* hullData = new bodyUserData;
     hullData->name = "hull";
     hullData->material = "metal";
@@ -291,6 +295,7 @@ void GameScene::tick(float dt) {
                 // CCLOG("intersectionPoints: %u", intersectionPoints.size());
                 float dragMag = dragDot * edgeLength * density * vel * vel;
                 b2Vec2 dragForce = dragMag * -velDir;
+
                 fixtureBody->GetBody()->ApplyForce( dragForce, midPoint, true );
 
                 //apply lift
@@ -299,21 +304,9 @@ void GameScene::tick(float dt) {
                 b2Vec2 liftDir = b2Cross(1, velDir); //gets perpendicular vector
                 b2Vec2 liftForce = liftMag * liftDir;
                 fixtureBody->GetBody()->ApplyForce( liftForce, midPoint, true );
-
-
             }
 
 
-            // //Apply drag.
-            // //find relative velocity between object and fluid
-            // b2Vec2 velDir = fixtureBody->GetBody()->GetLinearVelocityFromWorldPoint( centroid ) -
-            //                 fixtureWater->GetBody()->GetLinearVelocityFromWorldPoint( centroid );
-            // float vel = velDir.Normalize();
-
-            // //apply simple linear drag
-            // float dragMag = fixtureWater->GetDensity() * vel * vel;
-            // b2Vec2 dragForce = dragMag * -velDir;
-            // fixtureBody->GetBody()->ApplyForce( dragForce, centroid, true );
 
             //apply simple angular drag
             float angularDrag = area * -fixtureBody->GetBody()->GetAngularVelocity();
@@ -339,10 +332,10 @@ void GameScene::tick(float dt) {
             if (userData->sprite != NULL) {
                 Sprite *sprite = (Sprite*) userData->sprite;
                 auto spritePosition = Vec2((position.x * PTM_RATIO) + 100, (position.y * PTM_RATIO));
-                CCLOG("Achei o navio. Vou tentar setar a sua posicao. (%4.2f, %4.2f)", spritePosition.x, spritePosition.y);
+                // CCLOG("Achei o navio. Vou tentar setar a sua posicao. (%4.2f, %4.2f)", spritePosition.x, spritePosition.y);
 
                 sprite->setPosition(spritePosition);
-                CCLOG("consegui");
+                // CCLOG("consegui");
 
                 sprite->setRotation(-1 * CC_RADIANS_TO_DEGREES(angle));
 
@@ -559,7 +552,7 @@ void BoyancyContactListener::BeginContact(b2Contact* contact)
 
     void* userDataA = fixtureA->GetUserData();
     void* userDataB = fixtureB->GetUserData();
-    b2Body* hullBody;
+    // b2Body* hullBody = NULL;
 
 
 
@@ -571,7 +564,7 @@ void BoyancyContactListener::BeginContact(b2Contact* contact)
     {
 
         CCLOG("Contact Begin between ship and water. contact A is water");
-        hullBody = fixtureA->GetBody();
+        // hullBody = fixtureA->GetBody();
         m_layer->m_boyancyFixturePairs.insert( std::make_pair(fixtureA, fixtureB) );
         if (((bodyUserData*) userDataA)->name == "wave") {
             isWave = true;
@@ -582,7 +575,7 @@ void BoyancyContactListener::BeginContact(b2Contact* contact)
               userDataA !=  NULL && ((bodyUserData*) userDataA)->name == "hull")
     {
         CCLOG("Contact Begin between ship and water. contact B is water");
-        hullBody = fixtureB->GetBody();
+        // hullBody = fixtureB->GetBody();
         m_layer->m_boyancyFixturePairs.insert( std::make_pair(fixtureB, fixtureA) );
         if (((bodyUserData*) userDataB)->name == "wave") {
             isWave = true;
@@ -599,7 +592,7 @@ void BoyancyContactListener::BeginContact(b2Contact* contact)
 
 
 
-    CCLOG("We have %u boyancy pairs.", m_layer->m_boyancyFixturePairs.size());
+    CCLOG("We have %zu boyancy pairs.", m_layer->m_boyancyFixturePairs.size());
 }
 
 void BoyancyContactListener::EndContact(b2Contact* contact)
@@ -632,7 +625,7 @@ void BoyancyContactListener::EndContact(b2Contact* contact)
         }
 
     }
-    CCLOG("We have %u boyancy pairs.", m_layer->m_boyancyFixturePairs.size());
+    CCLOG("We have %zu boyancy pairs.", m_layer->m_boyancyFixturePairs.size());
 
     if (isWave) {
         CCLOG("Stop Apply force to ship");
